@@ -2,11 +2,9 @@ FabScan - Affordable 3D Laser Scanning of Physical Objects
 
 Visit http://hci.rwth-aachen.de/fabscan for presentation and documentation about the project.
 
-
-
 FabScan makes use of the PCL (Point Cloud Library). See http://pointclouds.org/downloads/ for installation instructions.
 
-Folder Strcuture:
+Folder Structure:
 -> arduino :: contains the firmware for the Arduino inside the FabScanner
 -> experimental
   -> pointclouds :: sample pointclouds created with the FabScan
