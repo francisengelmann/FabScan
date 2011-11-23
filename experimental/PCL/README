@@ -1,0 +1,11 @@
+Make sure you have cmake installed.
+
+Installing PCL
+==============
+Linux:
+	see http://pointclouds.org/downloads/linux.html
+
+Mac: download and install Homebrew (http://mxcl.github.com/homebrew/)
+	In Terminal type: brew install pcl
+
+For more detailed information please check: http://pointclouds.org/downloads/
