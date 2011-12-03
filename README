@@ -11,3 +11,5 @@ Folder Structure:
 -> experimental
   -> pointclouds :: sample pointclouds created with the FabScan
   -> PCL :: contains example code from the Point Cloud Library
+-> parts :: contains all the models for the hardware
+-> sources :: source code of FabScan software
