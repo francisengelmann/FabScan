@@ -1,0 +1,67 @@
+.synopsis, .classsynopsis 
+{
+  background: #eeeeee;
+  border: solid 1px #aaaaaa;
+  padding: 0.5em;
+}
+
+Body { 
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+A.link {
+    color: blue;
+    text-decoration: underline;
+}
+
+A.visited {
+    color: purple;
+    text-decoration: underline;
+}
+
+A.active {
+    color: red;
+    text-decoration: underline;
+}
+
+
+H1 {
+    color: #000000;
+    background-color: #6699FF;
+    text-align: center;
+}
+
+
+H2 {
+    color: #000000;
+    text-decoration: underline;
+}
+
+H3 {
+    color: #0000f0;
+    margin-bottom: 0pt;
+    font-family: "Helvetica";
+}
+
+
+H4 {
+    color: #0000f0;
+    margin-bottom: 0pt;
+    font-family: "Helvetica";
+}
+
+
+P.Blurb {
+    margin-top: 0pt;
+    color: #000000;
+    font-style: Italic;
+    font-weight: Bold;
+    font-family: "Helvetica";
+    font-size: 80%;
+}
+
+DL DT {
+    font-family:Monospace;
+    # font-size: 80%;
+}

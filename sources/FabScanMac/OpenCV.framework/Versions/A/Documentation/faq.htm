@@ -1,0 +1,413 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html><head>
+<title>OpenCV Documentation (draft)</title>
+</head><body>
+
+<center><table cellspacing=0 cellpadding=5 width="90%" bgcolor="#6a9bed" nosave >
+<tr nosave>
+<td nosave>
+<center><i><font color="#000000"><font size=+4>
+Frequently Asked Questions / Troubleshootings / HOWTOs
+</font></font></i></center>
+</td>
+</tr>
+</table></center>
+
+<h1>General Questions</h1>
+
+<hr><h3>How to install OpenCV properly?</h3>
+<p>Read <a href="../INSTALL">installation guide</a>
+
+<hr><h3>How can I get acquainted with OpenCV fast?</h3>
+<p>
+<ol><li>Look at <a href="../samples/c/">samples</a>.
+<li>Within Visual Studio you may load <a href="../_make/">OpenCV workspace</a>:
+<ul>
+<li>opencv.dsw for Microsoft Visual Studio 6.0
+<li>opencv.sln for Microsoft Visual Studio .NET 2003
+<li>cbuilderx/opencv.bpgr for Borland C++ BuilderX
+</ul>
+select <code>cvsample</code> project, build it and run. Look into the code
+and modify it as you wish.
+<li>Also, scan through <a href="index.htm#ref">reference manuals</a> - they contain some example code as well.
+<li>Search OpenCV archives at <a href="http://groups.yahoo.com/group/OpenCV">http://groups.yahoo.com/group/OpenCV</a>
+for the topic you are interesting in.
+<li>Create a new project <a href="#devstudio_project">from scratch</a>
+or modify existing <code>cvsample</code>.
+There are application wizards for Microsoft Visual Studio that create OpenCV-aware projects;
+look for them at <a href="http://groups.yahoo.com/group/OpenCV">http://groups.yahoo.com/group/OpenCV</a>
+(Files section - you have to be registered OpenCV@yahoogroups.com user)
+</ol>
+</p>
+
+<hr><h3>Where do I submit Bug reports for the computer vision library?</h3>
+<p>Send email to <a href="mailto:OpenCV@yahoogroups.com">OpenCV@yahoogroups.com</a>&nbsp;
+Subject: BUG &lt;....your title...&gt;</p>
+
+<hr><h3>How do I send bug reports on the Intel® Integrated Performance Primitives</h3>
+<p>Send email to <a href="mailto:developer_support@intel.com">developer_support@intel.com</a></p>
+
+<hr><h3>How do I join the OpenCV forum?</h3>
+<p>Send email to <a href="mailto:OpenCV-subscribe@yahoogroups.com">OpenCV-subscribe@yahoogroups.com</a>,
+after you are a member and select your login, you can read the web group at
+<a href="http://groups.yahoo.com/group/OpenCV">http://groups.yahoo.com/group/OpenCV</a></p>
+
+<hr><h3>How do I modify the web group so that I don't receive tons of email's?</h3>
+<p>To get the messages real time, or once a day as a daily digest,
+you can go to <a href="http://groups.yahoo.com/mygroups" target="_top">http://groups.yahoo.com/mygroups</a>
+and choose your setting from the pull down list to the right of OpenCV.;</p>
+
+<hr><h3>Ok, I found the group completely useless for me. How can I unsubscribe?</h3>
+<p>Mail to <a href="mailto:OpenCV-unsubscribe@yahoogroups.com">OpenCV-unsubscribe@yahoogroups.com</a>
+with subject <b>[OpenCV]</b> and arbitrary message contents.</p>
+
+<hr><h3>When using OpenCV and IPL simultaneously, I get compiler errors. How to resolve this problem?</h3>
+<p>To be completely independent from IPL, OpenCV duplicates declarations of IplImage
+and few other structures and constants if it is not told explicitly that IPL is present.
+Defining HAVE_IPL before including OpenCV headers or putting "#include &lt;ipl.h&gt;"
+before OpenCV headers resolves the conflict.</p>
+
+<hr><h3>Does OpenCV work on other processors?</h3>
+<p>Yes, OpenCV itself is open source and it is quite portable, especially across
+32-bit platforms. On the other hand, OpenCV can run much faster on Intel processors
+because of <a href="index.htm#ipp">IPP</a>.
+
+
+<hr><h1>Windows&reg; OS related Qs:</h1>
+
+<hr><h3>When I try to build one of the
+apps, I get an error, streams.h not found.</h3>
+<p>You need install and setup DirectShow SDK that is now a part of Platform SDK
+(Windows Server 2003 SP1 SDK or later).
+Here is the procedure:
+<ol>
+<li>Download the Platform SDK from
+   <a href="http://www.microsoft.com/msdownload/platformsdk/sdkupdate/">
+    http://www.microsoft.com/msdownload/platformsdk/sdkupdate/</a><br>
+   and DirectX SDK from <a href="http://msdn.microsoft.com/directx/">
+   http://msdn.microsoft.com/directx/</a>
+   (They are huge, but you can download and install them by parts).<br>
+   If it doesn't work for you, consider HighGUI that can capture video via VFW or MIL
+
+<li>Install Platform SDK <em>together</em> with DirectShow SDK.<br>
+   Install DirectX SDK (with or without sample code).
+
+<li>Build baseclasses.
+   See &lt;PlatformSDKInstallFolder&gt;\samples\multimedia\directshow\readme.txt.
+
+<li>Copy the built libraries (called strmbase.lib and strmbasd.lib
+   in Release and Debug versions, respectively) to 
+   &lt;PlatformSDKInstallFolder&gt;\lib.
+
+<li>In Developer Studio add the following paths:<br>
+      &lt;DirectXSDKInstallFolder&gt;\include<br>
+      &lt;PlatformSDKInstallFolder&gt;\include<br>
+      &lt;PlatformSDKInstallFolder&gt;\samples\multimedia\directshow\baseclasses<br>
+    to the includes' search path
+    (at Tools->Options->Directories->Include files in case of Visual Studio 6.0,<br>
+     at Tools->Options->Projects and Solutions->VC++ Directories->Include files in case
+     of Visual Studio 2005)<br>
+   Add<br>
+      &lt;DirectXSDKInstallFolder&gt;\lib<br>
+      &lt;PlatformSDKInstallFolder&gt;\lib<br>
+   to the libraries' search path (in the same dialog, ...->"Library files" page)<p>
+
+   NOTE: PUT THE ADDED LINES ON THE VERY TOP OF THE LISTS, OTHERWISE YOU MAY STILL GET
+   COMPILER OR LINKER ERRORS. This is necessary, because Visual Studio
+   may include older versions of the same headers and libraries.</p> 
+
+<li>Now you can build OpenCV DirectShow filters.
+</ol>
+
+<hr><h3>After installing DirectX SDK I'm still getting linker error about undefined
+     or redefined "TransInPlace" filter class constructors etc.</h3>
+<p>Put the paths to the SDKs' include and lib folders on the top of the search lists.</p>
+
+<hr><h3>When I use try to use cvcam, it just crashes</h3>
+<p>Make sure, you registered ProxyTrans.ax and SyncFilter.ax</p>
+
+<!-- <hr><h3>CamShiftDemo can not be run</h3>
+<p>Make sure, you registered CamShift.ax and you have DirectShow-compatible camera</p> -->
+
+<hr><h3>How to register *.ax (DirectShow filter)?</h3>
+<p>Open the file (within explorer) using regsvr32.exe (under Win2000 it is done by
+Open with->Choose Program...->Browse...->c:\windows\system32\regsvr32.exe (path may be different).
+You may remember association to save clicks later.</p>
+
+<hr><h3>Filter couldn't be registered (regsvr32 reports an error)</h3>
+<p>The most probable reason is that the filter requires some DLLs that are not in the path.
+In case of OpenCV make sure &lt;OpenInstallFolder&gt;\bin is in the path</p>
+
+<!-- <hr><h3>LKDemo / HMMDemo reports an error during startup and no the view is completely black</h3>
+<p>To run either of these apps you will need VFW-compatible camera.
+At startup the programs iterate through registered video capture devices.
+It might be that they could not find one. Try to select the camera manually
+by pressing "tune capture parameters" (camera) toolbar button. Then, try to
+setup video format (the button on the left from camera) to make the camera work.
+</p> -->
+
+
+<hr><h3>cxcore096d.dll or cxcored.lib seem to be missing</h3>
+<p>cxcore096d.dll means debug version of cxcore DLL and cxcored.lib is the import library for cxcore096d.dll.
+Open <a href="../_make/">OpenCV workspace</a>, select "cxcore" as active project and
+select "Win32 Debug" configuration. Build the library and you will get bin\cxcore096d.dll and
+lib\cxcored.lib files. The same should be repeat for <em>all</em> the other OpenCV components
+- name of binary, ending with <em>d</em> means Debug version that are not shipped.</p>
+
+<hr><h3>When compiling HighGUI I get the error message "mil.h is not found"</h3>
+mil.h is a part of Matrox Imaging Library (MIL) that is usually supplied with
+Matrox (or compatible) framegrabbers, such as Meteor, Meteor II etc.
+<ul>
+<li>If you have such
+a framegrabber and MIL installed, add mil\include and mil\lib to the search paths
+within Developer Studio (submenu Tools-&gt;Options-&gt;Directories).
+<li>If you do not have MIL, just ignore the error. The file mil.h is only required
+to build MIL-aware version of Highgui "Win32 MIL Debug" or "Win32 MIL Release".
+Select "Win32 Debug" or "Win32 Release" configuration of highgui
+(submenu Build-&gt;Set Active Configuration...) instead - these versions of highgui
+can still be used to grab video via VFW interface, work with AVIs and still images.
+</ul>
+
+<hr><h3>How can I debug DirectShow filter?</h3>
+<p><ul>
+<li>Open workspace with the filter (e.g. opencv.dsw),
+<li>select the filter as active project and build it in debug configuration,
+<li>switch to explorer for a minute to register debug version of the filter
+(e.g. regsvr32 camshiftd.ax) (it needs to be done only when debug/release version are switched - not
+every time when filter is recompiled, because registry stores only the filter name),
+<li>get back to Developer Studio and start debugging session (F5).
+    It will ask, what application do you want to run to debug the module.
+    You may choose camshiftdemo to debug camshift.ax and
+    DirectX SDK tool graphedit to debug arbitrary DirectShow filter.
+<li>Within graphedit build filter graph (e.g. camera->camshift->renderer)
+<li>Save the graph (you may just load it next time)
+<li>Set the breakpoint inside ::Transform method of the filter or in other location.
+<li>Run the filter and ... have fun
+</ul>
+
+
+<hr><h3><a name="devstudio_project">How can I create Developer Studio project to start playing with OpenCV</a></h3>
+<p>(note: this is a lengthy answer)
+<p>
+To create your own OpenCV-based project in Developer Studio
+from scratch do the following:</p>
+    <ol>
+    <li>Within Developer Studio create new application:
+    <ol>
+      <li>select from menu "File"->"New..."->"Projects" tab.
+        Choose "Win32 Application" or "Win32 console application" - the latter is
+        the easier variant and the both sample projects have this type.
+
+      <li>type the project name and choose location
+      <li>you may create own workspace for the project ("Create new workspace")
+        or include the new project into the currently loaded workspace
+        ("Add to current workspace").
+      <li>click "next" button
+      <li>choose "An empty project", click "Finish", "OK".
+    </ol>
+      After the above steps done Developer Studio will create the project
+      folder (by default it has the same name as the project),
+      &lt;project name&gt;.dsp file and, optionally, &lt;project name&gt;.dsw,.ncb ... files
+      if you create own workspace.
+
+    <li>Add a file to the project:
+      <ul>
+      <li>select from menu "File"->"New..."->"Files" tab.
+      <li>choose "C++ Source File", type file name and press "OK"
+      <li>add OpenCV-related #include directives:
+      <pre>
+        #include "cv.h"
+        /* #inlcude "cvaux.h" // experimental stuff (if need) */
+        #include "highgui.h"
+      </pre>
+      Or, you may copy some existing file (say, opencv\samples\c\morphology.c) to the project folder,
+      open it and add to the project
+      (right click in editor view -&gt; "Insert File into Project" -&gt; &lt;your project name&gt; ).
+      </ul>
+    <li>Customize project settings:
+      <ul>
+      <li>Activate project setting dialog by choosing menu item
+        "Project"-&gt;"Settings...".
+      <li>Select your project in the right pane.
+      <li>Tune settings, common to both Release and Debug configurations:
+        <ul>
+        <li>Select "Settings For:"-&gt;"All Configurations"
+        <li>Choose "C/C++" tab -&gt; "Preprocessor" category -&gt; "Additional Include Directories:".
+          Add comma-separated relative (to the .dsp file) or absolute paths
+          to opencv\cxcore\include, opencv\cv\include, opencv\otherlibs\highgui and, optionally,
+          opencv\cvaux\include.
+        <li>Choose "Link" tab -&gt; "Input" category -&gt; "Additional library path:".
+          Add the paths to all necessary import libraries (cxcore[d].lib cv[d].lib hihghui[d].lib cvaux[d].lib)
+        </ul>
+       <li>Tune settings for "Debug" configuration
+       <ul>
+        <li>Select "Settings For:"-&gt;"Win32 Debug".
+        <li>Choose "Link" tab -&gt; "General" category -&gt; "Object/library modules".
+          Add space-separated cvd.lib, highguid.lib, cvauxd.lib (optionally)
+        <li>You may also want to change location and name of output file. For example,
+          if you want the output .exe file to be put into the project folder, rather
+          than Debug/ subfolder, you may type ./&lt;exe-name&gt;d.exe in
+          "Link" tab -&gt; "General" category -&gt; "Output file name:".
+        </ul>
+       <li>Tune settings for "Release" configuration
+       <ul>
+        <li>Select "Settings For:"-&gt;"Win32 Release".
+        <li>Choose "Link" tab -&gt; "General" category -&gt; "Object/library modules".
+          Add space-separated cv.lib, highgui.lib, cvaux.lib (optionally)
+        <li>Optionally, you may change name of the .exe file:
+          type ./&lt;exe-name&gt;.exe in "Link" tab -&gt; "General" category -&gt; "Output file name:".
+       </ul>
+       </ul>
+    <li>Add dependency projects into workspace:
+       <ul>
+       <li>Choose from menu: "Project" -&gt; "Insert project into workspace".
+       <li>Select opencv\cv\make\cv.dsp.
+       <li>Do the same for opencv\cvaux\make\cvaux.dsp, opencv\otherlibs\highgui\highgui.dsp.
+       <li>Set dependencies:
+       <ul>
+        <li>Choose from menu: "Project" -&gt; "Dependencies..."
+        <li>For "cv" choose "cxcore",
+        <li>For "cvaux" choose "cv", "cxcore",
+        <li>for "highgui" choose "cxcore",
+        <li>for your project choose all: "cxcore", "cv", "cvaux", "highgui".
+       </ul>
+       The dependencies customization allows to automatically build debug versions
+       of opencv libraries and rebuild the binaries if the sources are changed somehow.
+    </ul>
+    <li>That's it. Now compile and run everything.
+    </ol>
+
+<hr><h1>Linux Related Qs:</h1>
+
+TODO
+
+
+<hr><h1>Technical Questions on Library use:</h1>
+
+<hr><h3>How to access image pixels</h3>
+<p>
+(The coordinates are 0-based and counted from image origin, either top-left
+(img->origin=IPL_ORIGIN_TL) or bottom-left (img->origin=IPL_ORIGIN_BL)
+<ul>
+<li>Suppose, we have 8-bit 1-channel image I (IplImage* img):
+<pre>
+I(x,y) ~ ((uchar*)(img->imageData + img->widthStep*y))[x]
+</pre>
+<li>Suppose, we have 8-bit 3-channel image I (IplImage* img):
+<pre>
+I(x,y)<sub>blue</sub> ~ ((uchar*)(img->imageData + img->widthStep*y))[x*3]
+I(x,y)<sub>green</sub> ~ ((uchar*)(img->imageData + img->widthStep*y))[x*3+1]
+I(x,y)<sub>red</sub> ~ ((uchar*)(img->imageData + img->widthStep*y))[x*3+2]
+</pre>
+e.g. increasing brightness of point (100,100) by 30 can be done this way:
+<pre>
+CvPoint pt = {100,100};
+((uchar*)(img->imageData + img->widthStep*pt.y))[pt.x*3] += 30;
+((uchar*)(img->imageData + img->widthStep*pt.y))[pt.x*3+1] += 30;
+((uchar*)(img->imageData + img->widthStep*pt.y))[pt.x*3+2] += 30;
+</pre>
+or more efficiently
+<pre>
+CvPoint pt = {100,100};
+uchar* temp_ptr = &((uchar*)(img->imageData + img->widthStep*pt.y))[x*3];
+temp_ptr[0] += 30;
+temp_ptr[1] += 30;
+temp_ptr[2] += 30;
+</pre>
+<li>Suppose, we have 32-bit floating point, 1-channel image I (IplImage* img):
+<pre>
+I(x,y) ~ ((float*)(img->imageData + img->widthStep*y))[x]
+</pre>
+<li>Now, the general case: suppose, we have N-channel image of type T:
+<pre>
+I(x,y)<sub>c</sub> ~ ((T*)(img->imageData + img->widthStep*y))[x*N + c]
+or you may use macro CV_IMAGE_ELEM( image_header, elemtype, y, x_Nc )
+I(x,y)<sub>c</sub> ~ CV_IMAGE_ELEM( img, T, y, x*N + c )
+</pre>
+</ul>
+There are functions that work with arbitrary (up to 4-channel) images and matrices
+(cvGet2D, cvSet2D), but they are pretty slow.
+</p>
+
+<hr><h3>How to access matrix elements?</h3>
+<p>The technique is very similar.
+(In the samples below i - 0-based row index, j - 0-based column index)
+<ul>
+<li>Suppose, we have 32-bit floating point real matrix M (CvMat* mat):
+<pre>
+M(i,j) ~ ((float*)(mat->data.ptr + mat->step*i))[j]
+</pre>
+<li>Suppose, we have 64-bit floating point complex matrix M (CvMat* mat):
+<pre>
+Re M(i,j) ~ ((double*)(mat->data.ptr + mat->step*i))[j*2]
+Im M(i,j) ~ ((double*)(mat->data.ptr + mat->step*i))[j*2+1]
+</pre>
+<li>For single-channel matrices there is a macro CV_MAT_ELEM( matrix, elemtype, row, col ),
+i.e. for 32-bit floating point real matrix<pre>
+M(i,j) ~ CV_MAT_ELEM( mat, float, i, j ),</pre> e.g. here is
+initialization of 3x3 identity matrix:<pre>
+CV_MAT_ELEM( mat, float, 0, 0 ) = 1.f;
+CV_MAT_ELEM( mat, float, 0, 1 ) = 0.f;
+CV_MAT_ELEM( mat, float, 0, 2 ) = 0.f;
+CV_MAT_ELEM( mat, float, 1, 0 ) = 0.f;
+CV_MAT_ELEM( mat, float, 1, 1 ) = 1.f;
+CV_MAT_ELEM( mat, float, 1, 2 ) = 0.f;
+CV_MAT_ELEM( mat, float, 2, 0 ) = 0.f;
+CV_MAT_ELEM( mat, float, 2, 1 ) = 0.f;
+CV_MAT_ELEM( mat, float, 2, 2 ) = 1.f;
+</pre>
+</ul>
+
+<hr><h3>How to process my data with OpenCV</h3>
+<p>
+Suppose, you have 300x200 32-bit floating point image/array, that
+resides in 60000-element array.
+<pre>
+int cols = 300, rows = 200;
+float* myarr = new float[rows*cols];
+
+// step 1) initializing CvMat header
+CvMat mat = cvMat( rows, cols,
+                   CV_32FC1, // 32-bit floating-point, single channel type
+                   myarr // user data pointer (no data is copied)
+                   );
+// step 2) using cv functions, e.g. calculating l2 (Frobenius) norm
+double norm = cvNorm( &mat, 0, CV_L2 );
+
+...
+delete myarr;
+</pre>
+Other scenaria are described in the reference manual.
+See cvCreateMatHeader, cvInitMatHeader, cvCreateImageHeader, cvSetData etc.
+</p>
+
+<hr><h3>How to load and display image</h3>
+<pre>
+/* usage: prog &lt;image_name&gt; */
+#include "cv.h"
+#include "highgui.h"
+
+int main( int argc, char** argv )
+{
+    IplImage* img;
+    if( argc == 2 && (img = cvLoadImage( argv[1], 1)) != 0 )
+    {
+        cvNamedWindow( "Image view", 1 );
+        cvShowImage( "Image view", img );
+        cvWaitKey(0); // very important, contains event processing loop inside
+        cvDestroyWindow( "Image view" );
+        cvReleaseImage( &img );
+        return 0;
+    }
+    return -1;
+}
+</pre>
+
+<hr><h3>How to find and process contours</h3>
+<p>Look at <a href="../samples/c/squares.c">squares</a> demo</p>
+
+<hr><h3>How to calibrate camera using OpenCV</h3>
+<p>TODO</p>
+
+  </BODY>
+</HTML>

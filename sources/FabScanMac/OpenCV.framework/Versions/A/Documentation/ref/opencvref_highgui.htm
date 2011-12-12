@@ -1,0 +1,669 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html><head>
+<link rel="STYLESHEET" href="opencvref.css" charset="ISO-8859-1" type="text/css">
+<title>OpenCV: HighGUI Reference Manual</title>
+</head><body>
+
+<h1>HighGUI Reference Manual</h1>
+
+<hr><ul>
+<li><a href="#highgui_gui">Simple GUI</a>
+<li><a href="#highgui_loadsave">Loading and Saving Images</a>
+<li><a href="#highgui_video">Video I/O</a>
+<li><a href="#highgui_utils">Utility and System Functions</a>
+<li><a href="#highgui_func_index">Alphabetical List of Functions</a>
+</ul>
+
+
+<hr><h2><a name="highgui_overview">HighGUI overview</a></h2>
+
+<p>TODO</p>
+
+<hr><h2><a name="highgui_gui">Simple GUI</a></h2>
+
+<hr><h3><a name="decl_cvNamedWindow">cvNamedWindow</a></h3>
+<p class="Blurb">Creates window</p>
+<pre>
+int cvNamedWindow( const char* name, int flags=CV_WINDOW_AUTOSIZE );
+</pre><dl>
+<dt>name<dd>Name of the window which is used as window identifier and appears in
+the window caption.
+<dt>flags<dd>Flags of the window. Currently the only
+supported flag is <code>CV_WINDOW_AUTOSIZE</code>. If it is set,
+window size is automatically adjusted to fit the displayed image
+(see <a href="#decl_cvShowImage">cvShowImage</a>), while user can not change
+the window size manually.
+</dl><p>
+The function <code>cvNamedWindow</code>
+creates a window which can be used as a placeholder for images and trackbars.
+Created windows are referred by their names.
+</p><p>
+If the window with such a name already exists, the function does nothing.</p>
+
+
+<hr><h3><a name="decl_cvDestroyWindow">cvDestroyWindow</a></h3>
+<p class="Blurb">Destroys a window</p>
+<pre>
+void cvDestroyWindow( const char* name );
+</pre><dl>
+<dt>name<dd>Name of the window to be destroyed.
+</dl>
+<p>
+The function <code>cvDestroyWindow</code>
+destroys the window with a given name.
+</p>
+
+
+<hr><h3><a name="decl_cvDestroyAllWindows">cvDestroyAllWindows</a></h3>
+<p class="Blurb">Destroys all the HighGUI windows</p>
+<pre>
+void cvDestroyAllWindows(void);
+</pre>
+<p>
+The function <code>cvDestroyAllWindows</code>
+destroys all the opened HighGUI windows.
+</p>
+
+
+<hr><h3><a name="decl_cvResizeWindow">cvResizeWindow</a></h3>
+<p class="Blurb">Sets window size</p>
+<pre>
+void cvResizeWindow( const char* name, int width, int height );
+</pre><dl>
+<dt>name<dd>Name of the window to be resized.
+<dt>width<dd>New width
+<dt>height<dd>New height
+</dl><p>
+The function <code>cvResizeWindow</code> changes size of the window.
+</p>
+
+
+<hr><h3><a name="decl_cvMoveWindow">cvMoveWindow</a></h3>
+<p class="Blurb">Sets window position</p>
+<pre>
+void cvMoveWindow( const char* name, int x, int y );
+</pre><dl>
+<dt>name<dd>Name of the window to be resized.
+<dt>x<dd>New x coordinate of top-left corner
+<dt>y<dd>New y coordinate of top-left corner
+</dl><p>
+The function <code>cvMoveWindow</code> changes position of the window.
+</p>
+
+
+<hr><h3><a name="decl_cvGetWindowHandle">cvGetWindowHandle</a></h3>
+<p class="Blurb">Gets window handle by name</p>
+<pre>
+void* cvGetWindowHandle( const char* name );
+</pre><dl>
+<dt>name<dd>Name of the window.
+</dl><p>
+The function <code>cvGetWindowHandle</code>
+returns native window handle (HWND in case of Win32 and GtkWidget in case of GTK+).
+</p>
+
+
+<hr><h3><a name="decl_cvGetWindowName">cvGetWindowName</a></h3>
+<p class="Blurb">Gets window name by handle</p>
+<pre>
+const char* cvGetWindowName( void* window_handle );
+</pre><dl>
+<dt>window_handle<dd>Handle of the window.
+</dl><p>
+The function <code>cvGetWindowName</code>
+returns the name of window given its native handle
+(HWND in case of Win32 and GtkWidget in case of GTK+).
+</p>
+
+
+<hr>
+<h3><a name="decl_cvShowImage">cvShowImage</a></h3>
+<p class="Blurb">Shows the image in the specified window</p>
+<pre>
+void cvShowImage( const char* name, const CvArr* image );
+</pre><dl>
+<dt>name<dd>Name of the window.
+<dt>image<dd>Image to be shown.
+</dl><p>
+The function <code>cvShowImage</code>
+shows the image in the specified window. If the window was created with <code>CV_WINDOW_AUTOSIZE</code>
+flag then the image is shown with its original size, otherwise
+the image is scaled to fit the window.
+</p>
+
+
+<hr><h3><a name="decl_cvCreateTrackbar">cvCreateTrackbar</a></h3>
+<p class="Blurb">Creates the trackbar and attaches it to the specified window</p>
+<pre>
+CV_EXTERN_C_FUNCPTR( void (*CvTrackbarCallback)(int pos) );
+
+int cvCreateTrackbar( const char* trackbar_name, const char* window_name,
+                      int* value, int count, CvTrackbarCallback on_change );
+</pre><dl>
+<dt>trackbar_name<dd>Name of created trackbar.
+<dt>window_name<dd>Name of the window which will e used as a parent for created trackbar.
+<dt>value<dd>Pointer to the integer variable, which value will reflect the position of the slider.
+  Upon the creation the slider position is defined by this variable.
+<dt>count<dd>Maximal position of the slider. Minimal position is always 0.
+<dt>on_change<dd>Pointer to the function to be called every time the slider changes the position. This
+  function should be prototyped as <code>void Foo(int);</code>Can be NULL if
+  callback is not required.
+</dl><p>
+The function <code>cvCreateTrackbar</code>
+creates the trackbar (a.k.a. slider or range control) with the specified name and range,
+assigns the variable to be synchronized with trackbar position and specifies callback function
+to be called on trackbar position change. The created trackbar is displayed on top
+of given window.</p>
+
+
+<hr><h3><a name="decl_cvGetTrackbarPos">cvGetTrackbarPos</a></h3>
+<p class="Blurb">Retrieves trackbar position</p>
+<pre>
+int cvGetTrackbarPos( const char* trackbar_name, const char* window_name );
+</pre><dl>
+<dt>trackbar_name<dd>Name of trackbar.
+<dt>window_name<dd>Name of the window which is the parent of trackbar.
+</dl><p>
+The function <code>cvGetTrackbarPos</code>
+returns the current position of the specified trackbar.</p>
+
+
+<hr><h3><a name="decl_cvSetTrackbarPos">cvSetTrackbarPos</a></h3>
+<p class="Blurb">Sets trackbar position</p>
+<pre>
+void cvSetTrackbarPos( const char* trackbar_name, const char* window_name, int pos );
+</pre><dl>
+<dt>trackbar_name<dd>Name of trackbar.
+<dt>window_name<dd>Name of the window which is the parent of trackbar.
+<dt>pos<dd>New position.
+</dl><p>
+The function <code>cvSetTrackbarPos</code>
+  sets the position of the specified trackbar.</p>
+
+
+<hr><h3><a name="decl_cvSetMouseCallback">cvSetMouseCallback</a></h3>
+<p class="Blurb">Assigns callback for mouse events</p>
+<pre>
+#define CV_EVENT_MOUSEMOVE      0
+#define CV_EVENT_LBUTTONDOWN    1
+#define CV_EVENT_RBUTTONDOWN    2
+#define CV_EVENT_MBUTTONDOWN    3
+#define CV_EVENT_LBUTTONUP      4
+#define CV_EVENT_RBUTTONUP      5
+#define CV_EVENT_MBUTTONUP      6
+#define CV_EVENT_LBUTTONDBLCLK  7
+#define CV_EVENT_RBUTTONDBLCLK  8
+#define CV_EVENT_MBUTTONDBLCLK  9
+
+#define CV_EVENT_FLAG_LBUTTON   1
+#define CV_EVENT_FLAG_RBUTTON   2
+#define CV_EVENT_FLAG_MBUTTON   4
+#define CV_EVENT_FLAG_CTRLKEY   8
+#define CV_EVENT_FLAG_SHIFTKEY  16
+#define CV_EVENT_FLAG_ALTKEY    32
+
+CV_EXTERN_C_FUNCPTR( void (*CvMouseCallback )(int event, int x, int y, int flags, void* param) );
+
+void cvSetMouseCallback( const char* window_name, CvMouseCallback on_mouse, void* param=NULL );
+</pre><dl>
+<dt>window_name<dd>Name of the window.
+<dt>on_mouse<dd>Pointer to the function to be called every time mouse event occurs
+                in the specified window. This function should be prototyped as
+  <pre>void Foo(int event, int x, int y, int flags, void* param);</pre>
+  where <code>event</code> is one of <code>CV_EVENT_*</code>,
+  <code>x</code> and <code>y</code> are coordinates of mouse pointer in image coordinates
+  (not window coordinates), <code>flags</code> is a combination of <code>CV_EVENT_FLAG</code>,
+  and <code>param</code> is a user-defined parameter passed to the
+  <code>cvSetMouseCallback</code> function call.
+<dt>param<dd>User-defined parameter to be passed to the callback function.
+</dl><p>
+The function <code>cvSetMouseCallback</code>
+sets the callback function for mouse events occurring within the specified
+window. To see how it works, look at <a href="../../samples/c/ffilldemo.c">
+opencv/samples/c/ffilldemo.c</a> demo</p>
+
+
+<hr><h3><a name="decl_cvWaitKey">cvWaitKey</a></h3>
+<p class="Blurb">Waits for a pressed key</p>
+<pre>
+int cvWaitKey( int delay=0 );
+</pre><dl>
+<dt>delay<dd>Delay in milliseconds.
+</dl><p>
+The function <code>cvWaitKey</code> waits for key event infinitely (delay&lt;=0) or for "delay" milliseconds.
+Returns the code of the pressed key or -1 if no key were pressed until the specified timeout has elapsed.
+</p><p>
+<b>Note</b>: This function is the only method in HighGUI to fetch and handle events so
+it needs to be called periodically for normal event processing, unless HighGUI is used
+within some environment that takes care of event processing.
+</p>
+
+
+<hr><h2><a name="highgui_loadsave">Loading and Saving Images</a></h2>
+
+<hr><h3><a name="decl_cvLoadImage">cvLoadImage</a></h3>
+<p class="Blurb">Loads an image from file</p>
+<pre>
+/* 8 bit, color or gray - deprecated, use CV_LOAD_IMAGE_ANYCOLOR */
+#define CV_LOAD_IMAGE_UNCHANGED  -1
+/* 8 bit, gray */
+#define CV_LOAD_IMAGE_GRAYSCALE   0
+/* 8 bit unless combined with CV_LOAD_IMAGE_ANYDEPTH, color */
+#define CV_LOAD_IMAGE_COLOR       1
+/* any depth, if specified on its own gray */
+#define CV_LOAD_IMAGE_ANYDEPTH    2
+/* by itself equivalent to CV_LOAD_IMAGE_UNCHANGED
+   but can be modified with CV_LOAD_IMAGE_ANYDEPTH */
+#define CV_LOAD_IMAGE_ANYCOLOR    4
+
+IplImage* cvLoadImage( const char* filename, int flags=CV_LOAD_IMAGE_COLOR );
+</pre><dl>
+<dt>filename<dd>Name of file to be loaded.
+<dt>flags<dd>Specifies colorness and depth of the loaded image:<br>
+       The colorness specifies whether the loaded image is to be converted to
+       3 channels (CV_LOAD_IMAGE_COLOR), 1 channel (CV_LOAD_IMAGE_GRAYSCALE),
+       or left as it was in the input file (CV_LOAD_IMAGE_ANYCOLOR).<br>
+       Depth specifies whether the loaded image is to be converted to 8 bits
+       per pixel per color channel as was customary in previous versions of
+       OpenCV or left as they were in the input file.
+       If CV_LOAD_IMAGE_ANYDEPTH is passed the
+       pixel format can be 8 bit unsigned, 16 bit unsigned, 32 bit signed or
+       32 bit floating point.<br>
+
+       If conflicting flags are passed the flag with the smaller numerical
+       value wins. That is if
+       CV_LOAD_IMAGE_COLOR | CV_LOAD_IMAGE_ANYCOLOR
+       is passed the image is loaded with 3 channels.
+       CV_LOAD_IMAGE_ANYCOLOR is equivalent to specifying
+       CV_LOAD_IMAGE_UNCHANGED. However, CV_LOAD_IMAGE_ANYCOLOR has the
+       advantage that it can be combined with CV_LOAD_IMAGE_ANYDEPTH. So
+       CV_LOAD_IMAGE_UNCHANGED should not be used any longer.<br>
+
+       If you want to load the image as truthfully as possible pass
+       CV_LOAD_IMAGE_ANYDEPTH | CV_LOAD_IMAGE_ANYCOLOR.
+</dl><p>
+The function <code>cvLoadImage</code> loads an image
+from the specified file and returns the pointer to the loaded image.
+Currently the following file formats are supported:
+<ul>
+<li>Windows bitmaps - BMP, DIB;
+<li>JPEG files - JPEG, JPG, JPE;
+<li>Portable Network Graphics - PNG;
+<li>Portable image format - PBM, PGM, PPM, PXM, PNM;
+<li>Sun rasters - SR, RAS;
+<li>TIFF files - TIFF, TIF;
+<li>OpenEXR HDR images - EXR;
+<li>JPEG 2000 images - jp2.
+</ul>
+</p>
+
+<hr><h3><a name="decl_cvSaveImage">cvSaveImage</a></h3>
+<p class="Blurb">Saves an image to the file</p>
+<pre>
+int cvSaveImage( const char* filename, const CvArr* image );
+</pre><dl>
+<dt>filename<dd>Name of the file.
+<dt>image<dd>Image to be saved.
+</dl><p>
+The function <code>cvSaveImage</code>
+saves the image to the specified file.
+The image format is chosen depending on the <code>filename</code> extension, see
+<a href="#decl_cvLoadImage">cvLoadImage</a>.
+Only 8-bit single-channel or 3-channel
+(with &#39;BGR&#39; channel order) images can be saved using this function.
+If the format, depth or channel order is different, use <code>cvCvtScale</code>
+and <code>cvCvtColor</code> to convert it before saving, or use
+universal <code>cvSave</code> to save the image to XML or YAML format.
+</p>
+
+
+<hr><h2><a name="highgui_video">Video I/O functions</a></h2>
+
+<hr><h3><a name="decl_CvCapture">CvCapture</a></h3>
+<p class="Blurb">Video capturing structure</p>
+<pre>
+typedef struct CvCapture CvCapture;
+</pre>
+<p>
+The structure <a href="#decl_CvCapture">CvCapture</a>
+does not have public interface and is used only as a parameter for video
+capturing functions.
+</p>
+
+
+<hr>
+<h3><a name="decl_cvCreateFileCapture">cvCreateFileCapture</a></h3>
+<p class="Blurb">Initializes capturing video from file</p>
+<pre>
+CvCapture* cvCreateFileCapture( const char* filename );
+</pre><dl>
+<dt>filename<dd>Name of the video file.
+</dl><p>
+The function <code>cvCreateFileCapture</code>
+allocates and initialized the CvCapture structure for reading the video stream
+from the specified file.
+</p>
+<p>After the allocated structure is not used any more it should be released by
+<a href="#decl_cvReleaseCapture">cvReleaseCapture</a> function.
+</p>
+
+
+<hr><h3><a name="decl_cvCreateCameraCapture">cvCreateCameraCapture</a></h3>
+<p class="Blurb">Initializes capturing video from camera</p>
+<pre>
+CvCapture* cvCreateCameraCapture( int index );
+</pre><dl>
+<dt>index<dd>Index of the camera to be used. If there is only one camera or it
+does not matter what camera to use -1 may be passed.
+</dl><p>
+The function <code>cvCreateCameraCapture</code>
+allocates and initialized the CvCapture structure for reading a video stream
+from the camera. Currently two camera interfaces can be used on Windows: Video for
+Windows (VFW) and Matrox Imaging Library (MIL); and two on Linux:
+V4L and FireWire (IEEE1394).
+</p>
+<p>To release the structure, use <a href="#decl_cvReleaseCapture">cvReleaseCapture</a>.</p>
+
+
+<hr><h3><a name="decl_cvReleaseCapture">cvReleaseCapture</a></h3>
+<p class="Blurb">Releases the CvCapture structure</p>
+<pre>
+void cvReleaseCapture( CvCapture** capture );
+</pre><dl>
+<dt>capture<dd>pointer to video capturing structure.
+</dl><p>
+The function <code>cvReleaseCapture</code>
+releases the CvCapture structure allocated by <a href="#decl_cvCreateFileCapture">cvCreateFileCapture</a>
+or <a href="#decl_cvCreateCameraCapture">cvCreateCameraCapture</a>.
+</p>
+
+
+<hr><h3><a name="decl_cvGrabFrame">cvGrabFrame</a></h3>
+<p class="Blurb">Grabs frame from camera or file</p>
+<pre>
+int cvGrabFrame( CvCapture* capture );
+</pre><dl>
+<dt>capture<dd>video capturing structure.
+</dl><p>
+The function <code>cvGrabFrame</code>
+grabs the frame from camera or file. The grabbed frame is stored internally.
+The purpose of this function is to grab frame <em>fast</em> that is important
+for synchronization in case of reading from several cameras simultaneously. The
+grabbed frames are not exposed because they may be stored in compressed format
+(as defined by camera/driver). To retrieve the grabbed frame,
+<a href="#decl_cvRetrieveFrame">cvRetrieveFrame</a> should be used.
+</p>
+
+
+<hr><h3><a name="decl_cvRetrieveFrame">cvRetrieveFrame</a></h3>
+<p class="Blurb">Gets the image grabbed with cvGrabFrame</p>
+<pre>
+IplImage* cvRetrieveFrame( CvCapture* capture, int streamIdx=0 );
+</pre><dl>
+<dt>capture<dd>video capturing structure.
+<dt>streamIdx<dd>optional stream or camera index in multi-head systems.
+</dl><p>
+The function <code>cvRetrieveFrame</code>
+returns the latest grabbed image from the specified camera.
+The returned image should not be released or modified by user.
+</p>
+
+
+<hr><h3><a name="decl_cvQueryFrame">cvQueryFrame</a></h3>
+<p class="Blurb">Grabs and returns a frame from camera or file</p>
+<pre>
+IplImage* cvQueryFrame( CvCapture* capture );
+</pre><dl>
+<dt>capture<dd>video capturing structure.
+</dl><p>
+The function <code>cvQueryFrame</code>
+grabs a frame from camera or video file, decompresses and returns it.
+This function is just a combination of  <a href="#decl_cvGrabFrame">cvGrabFrame</a> and
+<a href="#decl_cvRetrieveFrame">cvRetrieveFrame</a> in one call. The
+returned image should not be released or modified by user.
+</p>
+
+
+<hr><h3><a name="decl_cvGetCaptureProperty">cvGetCaptureProperty</a></h3>
+<p class="Blurb">Gets video capturing properties</p>
+<pre>
+double cvGetCaptureProperty( CvCapture* capture, int property_id );
+</pre><dl>
+<dt>capture<dd>video capturing structure.
+<dt>property_id<dd>property identifier. Can be one of the following:<br>
+  <code>CV_CAP_PROP_POS_MSEC</code> - film current position in milliseconds or video capture timestamp<br>
+  <code>CV_CAP_PROP_POS_FRAMES</code> - 0-based index of the frame to be decoded/captured next<br>
+  <code>CV_CAP_PROP_POS_AVI_RATIO</code> - relative position of video file (0 - start of the film, 1 - end of the film)<br>
+  <code>CV_CAP_PROP_FRAME_WIDTH</code> - width of frames in the video stream<br>
+  <code>CV_CAP_PROP_FRAME_HEIGHT</code> - height of frames in the video stream<br>
+  <code>CV_CAP_PROP_FPS</code> - frame rate<br>
+  <code>CV_CAP_PROP_FOURCC</code> - 4-character code of codec.
+  <code>CV_CAP_PROP_FRAME_COUNT</code> - number of frames in video file.
+  </dl><p>
+The function <code>cvGetCaptureProperty</code>
+retrieves the specified property of camera or video file.
+</p>
+
+
+<hr><h3><a name="decl_cvSetCaptureProperty">cvSetCaptureProperty</a></h3>
+<p class="Blurb">Sets video capturing properties</p>
+<pre>
+int cvSetCaptureProperty( CvCapture* capture, int property_id, double value );
+</pre><dl>
+<dt>capture<dd>video capturing structure.
+<dt>property_id<dd>property identifier. Can be one of the following:<br>
+ <code>CV_CAP_PROP_POS_MSEC</code> - position in milliseconds from the file beginning<br>
+ <code>CV_CAP_PROP_POS_FRAMES</code> - position in frames (only for video files)<br>
+ <code>CV_CAP_PROP_POS_AVI_RATIO</code> - position in relative units (0 - start of the file, 1 - end of the file)<br>
+ <code>CV_CAP_PROP_FRAME_WIDTH</code> - width of frames in the video stream (only for cameras)<br>
+ <code>CV_CAP_PROP_FRAME_HEIGHT</code> - height of frames in the video stream (only for cameras)<br>
+ <code>CV_CAP_PROP_FPS</code> - frame rate (only for cameras)<br>
+ <code>CV_CAP_PROP_FOURCC</code> - 4-character code of codec (only for cameras).
+<dt>value<dd>value of the property.
+</dl><p>
+The function <code>cvSetCaptureProperty</code>
+sets the specified property of video capturing. Currently the function supports only
+video files: <code>CV_CAP_PROP_POS_MSEC, CV_CAP_PROP_POS_FRAMES, CV_CAP_PROP_POS_AVI_RATIO</code>
+</p>
+
+
+<hr><h3><a name="decl_cvCreateVideoWriter">cvCreateVideoWriter</a></h3>
+<p class="Blurb">Creates video file writer</p>
+<pre>
+typedef struct CvVideoWriter CvVideoWriter;
+CvVideoWriter* cvCreateVideoWriter( const char* filename, int fourcc, double fps, CvSize frame_size, int is_color=1 );
+</pre><dl>
+<dt>filename<dd>Name of the output video file.
+<dt>fourcc<dd>4-character code of codec used to compress the frames.
+              For example, <code>CV_FOURCC('P','I','M','1')</code> is MPEG-1 codec,
+              <code>CV_FOURCC('M','J','P','G')</code> is motion-jpeg codec etc.
+			  There are two special values that can be passed, that behave as follows:<br>
+			  <code>CV_FOURCC_PROMPT</code> - Opens a dialog box where the user can
+			  choose the compression method and parameters (WIN32 only).<br>
+			  <code>CV_FOURCC_DEFAULT</code> - Use the default compression method for the given file extension (Linux only).
+<dt>fps<dd>Framerate of the created video stream.
+<dt>frame_size<dd>Size of video frames.
+<dt>is_color<dd>If it is not zero, the encoder will expect and encode color frames, otherwise it will work
+with grayscale frames (the flag is currently supported on Windows only).
+</dl><p>
+The function <code>cvCreateVideoWriter</code>
+creates video writer structure.
+</p>
+
+<hr><h3><a name="decl_cvReleaseVideoWriter">cvReleaseVideoWriter</a></h3>
+<p class="Blurb">Releases video file writer</p>
+<pre>
+void cvReleaseVideoWriter( CvVideoWriter** writer );
+</pre><dl>
+<dt>writer<dd>pointer to video file writer structure.
+</dl><p>
+The function <code>cvReleaseVideoWriter</code>
+finishes writing to video file and releases the structure.
+</p>
+
+
+<hr><h3><a name="decl_cvWriteFrame">cvWriteFrame</a></h3>
+<p class="Blurb">Writes a frame to video file</p>
+<pre>
+int cvWriteFrame( CvVideoWriter* writer, const IplImage* image );
+</pre><dl>
+<dt>writer<dd>video writer structure.
+<dt>image</dt><dd>the written frame
+</dl><p>
+The function <code>cvWriteFrame</code>
+writes/appends one frame to video file.
+</p>
+
+
+<hr><h2><a name="highgui_utils">Utility and System Functions</a></h2>
+
+<hr><h3><a name="decl_cvInitSystem">cvInitSystem</a></h3>
+<p class="Blurb">Initializes HighGUI</p>
+<pre>
+int cvInitSystem( int argc, char** argv );
+</pre><dl>
+<dt>argc<dd>Number of command line arguments.
+<dt>argv<dd>Array of command line arguments
+</dl><p>
+The function <code>cvInitSystem</code>
+initializes HighGUI. If it wasn't called explicitly by the user before the first window
+is created, it is called implicitly then with <code>argc</code>=0, <code>argv</code>=NULL.
+Under Win32 there is no need to call it explicitly. Under X Window the arguments may
+be used to customize a look of HighGUI windows and controls.
+</p>
+
+
+<hr><h3><a name="decl_cvConvertImage">cvConvertImage</a></h3>
+<p class="Blurb">Converts one image to another with optional vertical flip</p>
+<pre>
+void cvConvertImage( const CvArr* src, CvArr* dst, int flags=0 );
+</pre><dl>
+<dt>src<dd>Source image.
+<dt>dst<dd>Destination image. Must be single-channel or 3-channel 8-bit image.
+<dt>flags</dt><dd>The operation flags:<br>
+    <code>CV_CVTIMG_FLIP</code> - flip the image vertically
+    <code>CV_CVTIMG_SWAP_RB</code> - swap red and blue channels.
+                                   In OpenCV color images have
+                                   <code><font color="blue">B</font><font color="green">G</font><font color="red">R</font></code>
+                                   channel order, however on some systems the order needs to be reversed
+                                   before displaying the image (<a href="#decl_cvShowImage">cvShowImage</a>
+                                   does this automatically).
+</dl><p>
+The function <code>cvConvertImage</code>
+converts one image to another and flips the result vertically if required.
+The function is used by <a href="#decl_cvShowImage">cvShowImage</a>.</p>
+
+<hr><h1><a name="highgui_func_index">Alphabetical List of Functions</a></h1>
+
+<hr><h3>C</h3>
+<table width="100%">
+<tr>
+<td width="25%"><a href="#decl_cvConvertImage">ConvertImage</a></td>
+<td width="25%"><a href="#decl_cvCreateFileCapture">CreateFileCapture</a></td>
+<td width="25%"><a href="#decl_cvCreateVideoWriter">CreateVideoWriter</a></td>
+</tr>
+<tr>
+<td width="25%"><a href="#decl_cvCreateCameraCapture">CreateCameraCapture</a></td>
+<td width="25%"><a href="#decl_cvCreateTrackbar">CreateTrackbar</a></td>
+<td width="25%%"></td>
+</tr>
+</table>
+<hr><h3>D</h3>
+<table width="100%">
+<tr>
+<td width="25%"><a href="#decl_cvDestroyAllWindows">DestroyAllWindows</a></td>
+<td width="25%"><a href="#decl_cvDestroyWindow">DestroyWindow</a></td>
+<td width="25%%"></td>
+</tr>
+</table>
+<hr><h3>G</h3>
+<table width="100%">
+<tr>
+<td width="25%"><a href="#decl_cvGetCaptureProperty">GetCaptureProperty</a></td>
+<td width="25%"><a href="#decl_cvGetWindowHandle">GetWindowHandle</a></td>
+<td width="25%"><a href="#decl_cvGrabFrame">GrabFrame</a></td>
+</tr>
+<tr>
+<td width="25%"><a href="#decl_cvGetTrackbarPos">GetTrackbarPos</a></td>
+<td width="25%"><a href="#decl_cvGetWindowName">GetWindowName</a></td>
+<td width="25%%"></td>
+</tr>
+</table>
+<hr><h3>I</h3>
+<table width="100%">
+<tr>
+<td width="25%"><a href="#decl_cvInitSystem">InitSystem</a></td>
+<td width="25%%"></td>
+<td width="25%%"></td>
+</tr>
+</table>
+<hr><h3>L</h3>
+<table width="100%">
+<tr>
+<td width="25%"><a href="#decl_cvLoadImage">LoadImage</a></td>
+<td width="25%%"></td>
+<td width="25%%"></td>
+</tr>
+</table>
+<hr><h3>M</h3>
+<table width="100%">
+<tr>
+<td width="25%"><a href="#decl_cvMoveWindow">MoveWindow</a></td>
+<td width="25%%"></td>
+<td width="25%%"></td>
+</tr>
+</table>
+<hr><h3>N</h3>
+<table width="100%">
+<tr>
+<td width="25%"><a href="#decl_cvNamedWindow">NamedWindow</a></td>
+<td width="25%%"></td>
+<td width="25%%"></td>
+</tr>
+</table>
+<hr><h3>Q</h3>
+<table width="100%">
+<tr>
+<td width="25%"><a href="#decl_cvQueryFrame">QueryFrame</a></td>
+<td width="25%%"></td>
+<td width="25%%"></td>
+</tr>
+</table>
+<hr><h3>R</h3>
+<table width="100%">
+<tr>
+<td width="25%"><a href="#decl_cvReleaseCapture">ReleaseCapture</a></td>
+<td width="25%"><a href="#decl_cvResizeWindow">ResizeWindow</a></td>
+<td width="25%%"></td>
+</tr>
+<tr>
+<td width="25%"><a href="#decl_cvReleaseVideoWriter">ReleaseVideoWriter</a></td>
+<td width="25%"><a href="#decl_cvRetrieveFrame">RetrieveFrame</a></td>
+<td width="25%%"></td>
+</tr>
+</table>
+<hr><h3>S</h3>
+<table width="100%">
+<tr>
+<td width="25%"><a href="#decl_cvSaveImage">SaveImage</a></td>
+<td width="25%"><a href="#decl_cvSetMouseCallback">SetMouseCallback</a></td>
+<td width="25%"><a href="#decl_cvShowImage">ShowImage</a></td>
+</tr>
+<tr>
+<td width="25%"><a href="#decl_cvSetCaptureProperty">SetCaptureProperty</a></td>
+<td width="25%"><a href="#decl_cvSetTrackbarPos">SetTrackbarPos</a></td>
+<td width="25%%"></td>
+</tr>
+</table>
+<hr><h3>W</h3>
+<table width="100%">
+<tr>
+<td width="25%"><a href="#decl_cvWaitKey">WaitKey</a></td>
+<td width="25%"><a href="#decl_cvWriteFrame">WriteFrame</a></td>
+<td width="25%%"></td>
+</tr>
+</table>
+
+</body>
+</html>
+

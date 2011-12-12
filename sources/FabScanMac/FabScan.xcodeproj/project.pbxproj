@@ -1,0 +1,603 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1514C4F213BE687400A902DA /* FSOpenGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1514C4F113BE687400A902DA /* FSOpenGLView.mm */; };
+		1528973213C76267004F49FC /* FSChessboardCalibration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1528973013C76267004F49FC /* FSChessboardCalibration.cpp */; };
+		152AF7631418B96A00F4BB3F /* FSStepper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 152AF7611418B96A00F4BB3F /* FSStepper.cpp */; };
+		152AF7701418C3A200F4BB3F /* FSSerial2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 152AF76E1418C3A200F4BB3F /* FSSerial2.cpp */; };
+		152AF783141A190400F4BB3F /* FSLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 152AF781141A190200F4BB3F /* FSLight.cpp */; };
+		152AF78D141BC5D400F4BB3F /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 152AF78C141BC5D400F4BB3F /* QTKit.framework */; };
+		152D27E013C234F40046DA70 /* FSVision.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 152D27DE13C234F40046DA70 /* FSVision.cpp */; };
+		152D534F13C20FE80099C8D5 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 152D534E13C20FE80099C8D5 /* GLUT.framework */; };
+		152E45CA13D4A61700C57148 /* FSPointCloud.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 152E45C813D4A61600C57148 /* FSPointCloud.cpp */; };
+		1532B3CF13D1B7CB00636817 /* FSChessboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1532B3CD13D1B7CB00636817 /* FSChessboard.cpp */; };
+		1532B3ED13D30AB900636817 /* FSBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1532B3EB13D30AB900636817 /* FSBox.cpp */; };
+		153554FA13D0CF8F00D38A63 /* OpenCV.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 153554F913D0CF8F00D38A63 /* OpenCV.framework */; };
+		153554FE13D0D18F00D38A63 /* OpenCV.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 153554FD13D0D18F00D38A63 /* OpenCV.framework */; };
+		1579D06D13BF99D3001AB01A /* FSObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1579D06B13BF99D3001AB01A /* FSObject.cpp */; };
+		1579D07513C0530D001AB01A /* FSWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1579D07313C0530D001AB01A /* FSWorld.cpp */; };
+		1579D08413C055D6001AB01A /* FSFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1579D08213C055D6001AB01A /* FSFrame.cpp */; };
+		1579D08A13C06831001AB01A /* FSWorldCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1579D08913C06831001AB01A /* FSWorldCamera.cpp */; };
+		1579D08C13C06ED5001AB01A /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1579D08B13C06ED4001AB01A /* OpenGL.framework */; };
+		1590BD871426817E00E3D748 /* startScanButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1590BD851426817E00E3D748 /* startScanButton.png */; };
+		1590BD881426817E00E3D748 /* stopScanButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1590BD861426817E00E3D748 /* stopScanButton.png */; };
+		1595C5C51425F7D80095E73D /* Intrinsics.xml in Resources */ = {isa = PBXBuildFile; fileRef = 1595C5C31425F7D80095E73D /* Intrinsics.xml */; };
+		1595C5C61425F7D80095E73D /* Distortion.xml in Resources */ = {isa = PBXBuildFile; fileRef = 1595C5C41425F7D80095E73D /* Distortion.xml */; };
+		1595C5D61425F84B0095E73D /* calib10.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1595C5C91425F84B0095E73D /* calib10.jpg */; };
+		1595C5D71425F84B0095E73D /* calib9.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1595C5CA1425F84B0095E73D /* calib9.jpg */; };
+		1595C5D81425F84B0095E73D /* calib8.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1595C5CB1425F84B0095E73D /* calib8.jpg */; };
+		1595C5D91425F84B0095E73D /* calib7.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1595C5CC1425F84B0095E73D /* calib7.jpg */; };
+		1595C5DA1425F84B0095E73D /* calib6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1595C5CD1425F84B0095E73D /* calib6.jpg */; };
+		1595C5DB1425F84B0095E73D /* calib5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1595C5CE1425F84B0095E73D /* calib5.jpg */; };
+		1595C5DC1425F84B0095E73D /* calib4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1595C5CF1425F84B0095E73D /* calib4.jpg */; };
+		1595C5DD1425F84B0095E73D /* calib3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1595C5D01425F84B0095E73D /* calib3.jpg */; };
+		1595C5DE1425F84B0095E73D /* calib2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1595C5D11425F84B0095E73D /* calib2.jpg */; };
+		1595C5DF1425F84B0095E73D /* calib1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1595C5D21425F84B0095E73D /* calib1.jpg */; };
+		1595C5E01425F84B0095E73D /* nolaser.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1595C5D31425F84B0095E73D /* nolaser.jpg */; };
+		1595C5E11425F84B0095E73D /* laser.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1595C5D41425F84B0095E73D /* laser.jpg */; };
+		1595C5E21425F84B0095E73D /* calib.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1595C5D51425F84B0095E73D /* calib.jpg */; };
+		1595C5E61425F8580095E73D /* orient in Resources */ = {isa = PBXBuildFile; fileRef = 1595C5E31425F8580095E73D /* orient */; };
+		1595C5E71425F8580095E73D /* simplify in Resources */ = {isa = PBXBuildFile; fileRef = 1595C5E41425F8580095E73D /* simplify */; };
+		1595C5E81425F8580095E73D /* powercrust in Resources */ = {isa = PBXBuildFile; fileRef = 1595C5E51425F8580095E73D /* powercrust */; };
+		1595C5ED142614DC0095E73D /* FabScanIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1595C5EC142614DB0095E73D /* FabScanIcon.icns */; };
+		15A4B2AE14062DEA00F1A687 /* FSTurnTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A4B2AC14062DEA00F1A687 /* FSTurnTable.cpp */; };
+		15D7B02513BF428F00BD469E /* FSCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15D7B02313BF428F00BD469E /* FSCamera.cpp */; };
+		15EC1876141D679400C69ED6 /* FSSurfaceMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15EC1874141D679400C69ED6 /* FSSurfaceMesh.cpp */; };
+		15EC187A141D681500C69ED6 /* FSModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15EC1878141D681500C69ED6 /* FSModel.cpp */; };
+		15FFC4CF13BE12A700063072 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15FFC4CE13BE12A700063072 /* Cocoa.framework */; };
+		15FFC4D913BE12A700063072 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 15FFC4D713BE12A700063072 /* InfoPlist.strings */; };
+		15FFC4DC13BE12A700063072 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 15FFC4DB13BE12A700063072 /* main.m */; };
+		15FFC4DF13BE12A700063072 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 15FFC4DD13BE12A700063072 /* Credits.rtf */; };
+		15FFC4E213BE12A700063072 /* FabScan3DAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 15FFC4E113BE12A700063072 /* FabScan3DAppDelegate.mm */; };
+		15FFC4E513BE12A700063072 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15FFC4E313BE12A700063072 /* MainMenu.xib */; };
+		15FFC4EC13BE12BF00063072 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15FFC4EB13BE12BF00063072 /* CoreFoundation.framework */; };
+		15FFC4EE13BE12CC00063072 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15FFC4ED13BE12CC00063072 /* IOKit.framework */; };
+		15FFC4F113BE130400063072 /* FSLaser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15FFC4EF13BE130400063072 /* FSLaser.cpp */; };
+		15FFC51013BE143200063072 /* FSSerial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15FFC50F13BE143200063072 /* FSSerial.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		153554FC13D0D15300D38A63 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				153554FE13D0D18F00D38A63 /* OpenCV.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		1514C4F013BE687400A902DA /* FSOpenGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSOpenGLView.h; sourceTree = "<group>"; };
+		1514C4F113BE687400A902DA /* FSOpenGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FSOpenGLView.mm; sourceTree = "<group>"; };
+		1528973013C76267004F49FC /* FSChessboardCalibration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FSChessboardCalibration.cpp; sourceTree = "<group>"; };
+		1528973113C76267004F49FC /* FSChessboardCalibration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSChessboardCalibration.h; sourceTree = "<group>"; };
+		152AF7611418B96A00F4BB3F /* FSStepper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FSStepper.cpp; sourceTree = "<group>"; };
+		152AF7621418B96A00F4BB3F /* FSStepper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSStepper.h; sourceTree = "<group>"; };
+		152AF76E1418C3A200F4BB3F /* FSSerial2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FSSerial2.cpp; sourceTree = "<group>"; };
+		152AF76F1418C3A200F4BB3F /* FSSerial2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSSerial2.h; sourceTree = "<group>"; };
+		152AF781141A190200F4BB3F /* FSLight.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FSLight.cpp; sourceTree = "<group>"; };
+		152AF782141A190400F4BB3F /* FSLight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSLight.h; sourceTree = "<group>"; };
+		152AF78C141BC5D400F4BB3F /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = System/Library/Frameworks/QTKit.framework; sourceTree = SDKROOT; };
+		152D27DE13C234F40046DA70 /* FSVision.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FSVision.cpp; path = FabScan3D/FSVision.cpp; sourceTree = "<group>"; };
+		152D27DF13C234F40046DA70 /* FSVision.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FSVision.h; path = FabScan3D/FSVision.h; sourceTree = "<group>"; };
+		152D534E13C20FE80099C8D5 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = /System/Library/Frameworks/GLUT.framework; sourceTree = "<absolute>"; };
+		152E45C713D4777200C57148 /* FSDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSDefines.h; sourceTree = "<group>"; };
+		152E45C813D4A61600C57148 /* FSPointCloud.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FSPointCloud.cpp; sourceTree = "<group>"; };
+		152E45C913D4A61600C57148 /* FSPointCloud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSPointCloud.h; sourceTree = "<group>"; };
+		1532B3CD13D1B7CB00636817 /* FSChessboard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FSChessboard.cpp; sourceTree = "<group>"; };
+		1532B3CE13D1B7CB00636817 /* FSChessboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSChessboard.h; sourceTree = "<group>"; };
+		1532B3EB13D30AB900636817 /* FSBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FSBox.cpp; sourceTree = "<group>"; };
+		1532B3EC13D30AB900636817 /* FSBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSBox.h; sourceTree = "<group>"; };
+		153554F913D0CF8F00D38A63 /* OpenCV.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OpenCV.framework; sourceTree = "<group>"; };
+		153554FD13D0D18F00D38A63 /* OpenCV.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OpenCV.framework; sourceTree = "<group>"; };
+		1579D06B13BF99D3001AB01A /* FSObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FSObject.cpp; sourceTree = "<group>"; };
+		1579D06C13BF99D3001AB01A /* FSObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSObject.h; sourceTree = "<group>"; };
+		1579D06F13BFA208001AB01A /* FSGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSGeometry.h; sourceTree = "<group>"; };
+		1579D07313C0530D001AB01A /* FSWorld.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FSWorld.cpp; sourceTree = "<group>"; };
+		1579D07413C0530D001AB01A /* FSWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSWorld.h; sourceTree = "<group>"; };
+		1579D08213C055D6001AB01A /* FSFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FSFrame.cpp; sourceTree = "<group>"; };
+		1579D08313C055D6001AB01A /* FSFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSFrame.h; sourceTree = "<group>"; };
+		1579D08613C05991001AB01A /* FSHeaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSHeaders.h; sourceTree = "<group>"; };
+		1579D08813C06831001AB01A /* FSWorldCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSWorldCamera.h; sourceTree = "<group>"; };
+		1579D08913C06831001AB01A /* FSWorldCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FSWorldCamera.cpp; sourceTree = "<group>"; };
+		1579D08B13C06ED4001AB01A /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
+		1590BD851426817E00E3D748 /* startScanButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = startScanButton.png; sourceTree = "<group>"; };
+		1590BD861426817E00E3D748 /* stopScanButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stopScanButton.png; sourceTree = "<group>"; };
+		1595C5C31425F7D80095E73D /* Intrinsics.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Intrinsics.xml; sourceTree = "<group>"; };
+		1595C5C41425F7D80095E73D /* Distortion.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Distortion.xml; sourceTree = "<group>"; };
+		1595C5C91425F84B0095E73D /* calib10.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = calib10.jpg; sourceTree = "<group>"; };
+		1595C5CA1425F84B0095E73D /* calib9.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = calib9.jpg; sourceTree = "<group>"; };
+		1595C5CB1425F84B0095E73D /* calib8.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = calib8.jpg; sourceTree = "<group>"; };
+		1595C5CC1425F84B0095E73D /* calib7.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = calib7.jpg; sourceTree = "<group>"; };
+		1595C5CD1425F84B0095E73D /* calib6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = calib6.jpg; sourceTree = "<group>"; };
+		1595C5CE1425F84B0095E73D /* calib5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = calib5.jpg; sourceTree = "<group>"; };
+		1595C5CF1425F84B0095E73D /* calib4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = calib4.jpg; sourceTree = "<group>"; };
+		1595C5D01425F84B0095E73D /* calib3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = calib3.jpg; sourceTree = "<group>"; };
+		1595C5D11425F84B0095E73D /* calib2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = calib2.jpg; sourceTree = "<group>"; };
+		1595C5D21425F84B0095E73D /* calib1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = calib1.jpg; sourceTree = "<group>"; };
+		1595C5D31425F84B0095E73D /* nolaser.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = nolaser.jpg; sourceTree = "<group>"; };
+		1595C5D41425F84B0095E73D /* laser.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = laser.jpg; sourceTree = "<group>"; };
+		1595C5D51425F84B0095E73D /* calib.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = calib.jpg; sourceTree = "<group>"; };
+		1595C5E31425F8580095E73D /* orient */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = orient; sourceTree = "<group>"; };
+		1595C5E41425F8580095E73D /* simplify */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = simplify; sourceTree = "<group>"; };
+		1595C5E51425F8580095E73D /* powercrust */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = powercrust; sourceTree = "<group>"; };
+		1595C5EC142614DB0095E73D /* FabScanIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = FabScanIcon.icns; sourceTree = "<group>"; };
+		15A4B2AC14062DEA00F1A687 /* FSTurnTable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FSTurnTable.cpp; sourceTree = "<group>"; };
+		15A4B2AD14062DEA00F1A687 /* FSTurnTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSTurnTable.h; sourceTree = "<group>"; };
+		15D7B02313BF428F00BD469E /* FSCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FSCamera.cpp; sourceTree = "<group>"; };
+		15D7B02413BF428F00BD469E /* FSCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCamera.h; sourceTree = "<group>"; };
+		15EC1874141D679400C69ED6 /* FSSurfaceMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FSSurfaceMesh.cpp; sourceTree = "<group>"; };
+		15EC1875141D679400C69ED6 /* FSSurfaceMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSSurfaceMesh.h; sourceTree = "<group>"; };
+		15EC1878141D681500C69ED6 /* FSModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FSModel.cpp; sourceTree = "<group>"; };
+		15EC1879141D681500C69ED6 /* FSModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSModel.h; sourceTree = "<group>"; };
+		15FFC4CA13BE12A700063072 /* FabScan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FabScan.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		15FFC4CE13BE12A700063072 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		15FFC4D113BE12A700063072 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		15FFC4D213BE12A700063072 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		15FFC4D313BE12A700063072 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		15FFC4D613BE12A700063072 /* FabScan-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FabScan-Info.plist"; sourceTree = "<group>"; };
+		15FFC4D813BE12A700063072 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		15FFC4DA13BE12A700063072 /* FabScan-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FabScan-Prefix.pch"; sourceTree = "<group>"; };
+		15FFC4DB13BE12A700063072 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		15FFC4DE13BE12A700063072 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		15FFC4E013BE12A700063072 /* FabScan3DAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FabScan3DAppDelegate.h; sourceTree = "<group>"; };
+		15FFC4E113BE12A700063072 /* FabScan3DAppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = FabScan3DAppDelegate.mm; sourceTree = "<group>"; };
+		15FFC4E413BE12A700063072 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		15FFC4EB13BE12BF00063072 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		15FFC4ED13BE12CC00063072 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		15FFC4EF13BE130400063072 /* FSLaser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FSLaser.cpp; sourceTree = "<group>"; };
+		15FFC4F013BE130400063072 /* FSLaser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSLaser.h; sourceTree = "<group>"; };
+		15FFC4F313BE131900063072 /* FSSerial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSSerial.h; sourceTree = "<group>"; };
+		15FFC50F13BE143200063072 /* FSSerial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FSSerial.cpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		15FFC4C713BE12A700063072 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				152D534F13C20FE80099C8D5 /* GLUT.framework in Frameworks */,
+				1579D08C13C06ED5001AB01A /* OpenGL.framework in Frameworks */,
+				15FFC4EE13BE12CC00063072 /* IOKit.framework in Frameworks */,
+				15FFC4EC13BE12BF00063072 /* CoreFoundation.framework in Frameworks */,
+				15FFC4CF13BE12A700063072 /* Cocoa.framework in Frameworks */,
+				153554FA13D0CF8F00D38A63 /* OpenCV.framework in Frameworks */,
+				152AF78D141BC5D400F4BB3F /* QTKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		15326DF713C08DC000EDF99B /* Software */ = {
+			isa = PBXGroup;
+			children = (
+				15EC187B141D683100C69ED6 /* Model */,
+				1579D08813C06831001AB01A /* FSWorldCamera.h */,
+				1579D08913C06831001AB01A /* FSWorldCamera.cpp */,
+				1579D06C13BF99D3001AB01A /* FSObject.h */,
+				1579D06B13BF99D3001AB01A /* FSObject.cpp */,
+				1579D07413C0530D001AB01A /* FSWorld.h */,
+				1579D07313C0530D001AB01A /* FSWorld.cpp */,
+				1579D08313C055D6001AB01A /* FSFrame.h */,
+				1579D08213C055D6001AB01A /* FSFrame.cpp */,
+				1528973113C76267004F49FC /* FSChessboardCalibration.h */,
+				1528973013C76267004F49FC /* FSChessboardCalibration.cpp */,
+				1532B3CE13D1B7CB00636817 /* FSChessboard.h */,
+				1532B3CD13D1B7CB00636817 /* FSChessboard.cpp */,
+				1532B3EC13D30AB900636817 /* FSBox.h */,
+				1532B3EB13D30AB900636817 /* FSBox.cpp */,
+			);
+			name = Software;
+			sourceTree = "<group>";
+		};
+		1579D08713C05B1C001AB01A /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				1579D08613C05991001AB01A /* FSHeaders.h */,
+				1579D06F13BFA208001AB01A /* FSGeometry.h */,
+				152E45C713D4777200C57148 /* FSDefines.h */,
+			);
+			name = Headers;
+			sourceTree = "<group>";
+		};
+		1595C5C81425F7DF0095E73D /* Calibration Files */ = {
+			isa = PBXGroup;
+			children = (
+				1595C5C91425F84B0095E73D /* calib10.jpg */,
+				1595C5CA1425F84B0095E73D /* calib9.jpg */,
+				1595C5CB1425F84B0095E73D /* calib8.jpg */,
+				1595C5CC1425F84B0095E73D /* calib7.jpg */,
+				1595C5CD1425F84B0095E73D /* calib6.jpg */,
+				1595C5CE1425F84B0095E73D /* calib5.jpg */,
+				1595C5CF1425F84B0095E73D /* calib4.jpg */,
+				1595C5D01425F84B0095E73D /* calib3.jpg */,
+				1595C5D11425F84B0095E73D /* calib2.jpg */,
+				1595C5D21425F84B0095E73D /* calib1.jpg */,
+				1595C5D31425F84B0095E73D /* nolaser.jpg */,
+				1595C5D41425F84B0095E73D /* laser.jpg */,
+				1595C5D51425F84B0095E73D /* calib.jpg */,
+				1595C5C31425F7D80095E73D /* Intrinsics.xml */,
+				1595C5C41425F7D80095E73D /* Distortion.xml */,
+			);
+			name = "Calibration Files";
+			sourceTree = "<group>";
+		};
+		1595C5E91425F8670095E73D /* Powercrust */ = {
+			isa = PBXGroup;
+			children = (
+				1595C5E31425F8580095E73D /* orient */,
+				1595C5E41425F8580095E73D /* simplify */,
+				1595C5E51425F8580095E73D /* powercrust */,
+			);
+			name = Powercrust;
+			sourceTree = "<group>";
+		};
+		15AAFF2A13C5DF5100BD5F19 /* Vision */ = {
+			isa = PBXGroup;
+			children = (
+				152D27DF13C234F40046DA70 /* FSVision.h */,
+				152D27DE13C234F40046DA70 /* FSVision.cpp */,
+			);
+			name = Vision;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		15D7B02713BF430500BD469E /* Hardware */ = {
+			isa = PBXGroup;
+			children = (
+				152AF782141A190400F4BB3F /* FSLight.h */,
+				152AF781141A190200F4BB3F /* FSLight.cpp */,
+				152AF76F1418C3A200F4BB3F /* FSSerial2.h */,
+				152AF76E1418C3A200F4BB3F /* FSSerial2.cpp */,
+				15FFC4F313BE131900063072 /* FSSerial.h */,
+				15FFC50F13BE143200063072 /* FSSerial.cpp */,
+				152AF7621418B96A00F4BB3F /* FSStepper.h */,
+				152AF7611418B96A00F4BB3F /* FSStepper.cpp */,
+				15A4B2AD14062DEA00F1A687 /* FSTurnTable.h */,
+				15A4B2AC14062DEA00F1A687 /* FSTurnTable.cpp */,
+				15D7B02413BF428F00BD469E /* FSCamera.h */,
+				15D7B02313BF428F00BD469E /* FSCamera.cpp */,
+				15FFC4F013BE130400063072 /* FSLaser.h */,
+				15FFC4EF13BE130400063072 /* FSLaser.cpp */,
+			);
+			name = Hardware;
+			sourceTree = "<group>";
+		};
+		15EC187B141D683100C69ED6 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				15EC1879141D681500C69ED6 /* FSModel.h */,
+				15EC1878141D681500C69ED6 /* FSModel.cpp */,
+				152E45C913D4A61600C57148 /* FSPointCloud.h */,
+				152E45C813D4A61600C57148 /* FSPointCloud.cpp */,
+				15EC1875141D679400C69ED6 /* FSSurfaceMesh.h */,
+				15EC1874141D679400C69ED6 /* FSSurfaceMesh.cpp */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		15FFC4BF13BE12A700063072 = {
+			isa = PBXGroup;
+			children = (
+				1595C5EC142614DB0095E73D /* FabScanIcon.icns */,
+				1590BD851426817E00E3D748 /* startScanButton.png */,
+				1590BD861426817E00E3D748 /* stopScanButton.png */,
+				153554FD13D0D18F00D38A63 /* OpenCV.framework */,
+				15FFC4D413BE12A700063072 /* FabScan */,
+				15FFC4CD13BE12A700063072 /* Frameworks */,
+				15FFC4CB13BE12A700063072 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		15FFC4CB13BE12A700063072 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				15FFC4CA13BE12A700063072 /* FabScan.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		15FFC4CD13BE12A700063072 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				152AF78C141BC5D400F4BB3F /* QTKit.framework */,
+				153554F913D0CF8F00D38A63 /* OpenCV.framework */,
+				152D534E13C20FE80099C8D5 /* GLUT.framework */,
+				1579D08B13C06ED4001AB01A /* OpenGL.framework */,
+				15FFC4ED13BE12CC00063072 /* IOKit.framework */,
+				15FFC4EB13BE12BF00063072 /* CoreFoundation.framework */,
+				15FFC4CE13BE12A700063072 /* Cocoa.framework */,
+				15FFC4D013BE12A700063072 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		15FFC4D013BE12A700063072 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				15FFC4D113BE12A700063072 /* AppKit.framework */,
+				15FFC4D213BE12A700063072 /* CoreData.framework */,
+				15FFC4D313BE12A700063072 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		15FFC4D413BE12A700063072 /* FabScan */ = {
+			isa = PBXGroup;
+			children = (
+				1579D08713C05B1C001AB01A /* Headers */,
+				15AAFF2A13C5DF5100BD5F19 /* Vision */,
+				15326DF713C08DC000EDF99B /* Software */,
+				15D7B02713BF430500BD469E /* Hardware */,
+				1514C4F013BE687400A902DA /* FSOpenGLView.h */,
+				1514C4F113BE687400A902DA /* FSOpenGLView.mm */,
+				15FFC4E013BE12A700063072 /* FabScan3DAppDelegate.h */,
+				15FFC4E113BE12A700063072 /* FabScan3DAppDelegate.mm */,
+				15FFC4E313BE12A700063072 /* MainMenu.xib */,
+				15FFC4D513BE12A700063072 /* Supporting Files */,
+			);
+			name = FabScan;
+			path = FabScan3D;
+			sourceTree = "<group>";
+		};
+		15FFC4D513BE12A700063072 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1595C5E91425F8670095E73D /* Powercrust */,
+				1595C5C81425F7DF0095E73D /* Calibration Files */,
+				15FFC4D613BE12A700063072 /* FabScan-Info.plist */,
+				15FFC4D713BE12A700063072 /* InfoPlist.strings */,
+				15FFC4DA13BE12A700063072 /* FabScan-Prefix.pch */,
+				15FFC4DB13BE12A700063072 /* main.m */,
+				15FFC4DD13BE12A700063072 /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		15FFC4C913BE12A700063072 /* FabScan */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 15FFC4E813BE12A700063072 /* Build configuration list for PBXNativeTarget "FabScan" */;
+			buildPhases = (
+				153554FC13D0D15300D38A63 /* CopyFiles */,
+				15FFC4C613BE12A700063072 /* Sources */,
+				15FFC4C713BE12A700063072 /* Frameworks */,
+				15FFC4C813BE12A700063072 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FabScan;
+			productName = FabScan3D;
+			productReference = 15FFC4CA13BE12A700063072 /* FabScan.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		15FFC4C113BE12A700063072 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 15FFC4C413BE12A700063072 /* Build configuration list for PBXProject "FabScan" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 15FFC4BF13BE12A700063072;
+			productRefGroup = 15FFC4CB13BE12A700063072 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				15FFC4C913BE12A700063072 /* FabScan */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		15FFC4C813BE12A700063072 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				15FFC4D913BE12A700063072 /* InfoPlist.strings in Resources */,
+				15FFC4DF13BE12A700063072 /* Credits.rtf in Resources */,
+				15FFC4E513BE12A700063072 /* MainMenu.xib in Resources */,
+				1595C5C51425F7D80095E73D /* Intrinsics.xml in Resources */,
+				1595C5C61425F7D80095E73D /* Distortion.xml in Resources */,
+				1595C5D61425F84B0095E73D /* calib10.jpg in Resources */,
+				1595C5D71425F84B0095E73D /* calib9.jpg in Resources */,
+				1595C5D81425F84B0095E73D /* calib8.jpg in Resources */,
+				1595C5D91425F84B0095E73D /* calib7.jpg in Resources */,
+				1595C5DA1425F84B0095E73D /* calib6.jpg in Resources */,
+				1595C5DB1425F84B0095E73D /* calib5.jpg in Resources */,
+				1595C5DC1425F84B0095E73D /* calib4.jpg in Resources */,
+				1595C5DD1425F84B0095E73D /* calib3.jpg in Resources */,
+				1595C5DE1425F84B0095E73D /* calib2.jpg in Resources */,
+				1595C5DF1425F84B0095E73D /* calib1.jpg in Resources */,
+				1595C5E01425F84B0095E73D /* nolaser.jpg in Resources */,
+				1595C5E11425F84B0095E73D /* laser.jpg in Resources */,
+				1595C5E21425F84B0095E73D /* calib.jpg in Resources */,
+				1595C5E61425F8580095E73D /* orient in Resources */,
+				1595C5E71425F8580095E73D /* simplify in Resources */,
+				1595C5E81425F8580095E73D /* powercrust in Resources */,
+				1595C5ED142614DC0095E73D /* FabScanIcon.icns in Resources */,
+				1590BD871426817E00E3D748 /* startScanButton.png in Resources */,
+				1590BD881426817E00E3D748 /* stopScanButton.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		15FFC4C613BE12A700063072 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				15FFC4DC13BE12A700063072 /* main.m in Sources */,
+				15FFC4E213BE12A700063072 /* FabScan3DAppDelegate.mm in Sources */,
+				15FFC4F113BE130400063072 /* FSLaser.cpp in Sources */,
+				15FFC51013BE143200063072 /* FSSerial.cpp in Sources */,
+				1514C4F213BE687400A902DA /* FSOpenGLView.mm in Sources */,
+				15D7B02513BF428F00BD469E /* FSCamera.cpp in Sources */,
+				1579D06D13BF99D3001AB01A /* FSObject.cpp in Sources */,
+				1579D07513C0530D001AB01A /* FSWorld.cpp in Sources */,
+				1579D08413C055D6001AB01A /* FSFrame.cpp in Sources */,
+				1579D08A13C06831001AB01A /* FSWorldCamera.cpp in Sources */,
+				152D27E013C234F40046DA70 /* FSVision.cpp in Sources */,
+				1528973213C76267004F49FC /* FSChessboardCalibration.cpp in Sources */,
+				1532B3CF13D1B7CB00636817 /* FSChessboard.cpp in Sources */,
+				1532B3ED13D30AB900636817 /* FSBox.cpp in Sources */,
+				152E45CA13D4A61700C57148 /* FSPointCloud.cpp in Sources */,
+				15A4B2AE14062DEA00F1A687 /* FSTurnTable.cpp in Sources */,
+				152AF7631418B96A00F4BB3F /* FSStepper.cpp in Sources */,
+				152AF7701418C3A200F4BB3F /* FSSerial2.cpp in Sources */,
+				152AF783141A190400F4BB3F /* FSLight.cpp in Sources */,
+				15EC1876141D679400C69ED6 /* FSSurfaceMesh.cpp in Sources */,
+				15EC187A141D681500C69ED6 /* FSModel.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		15FFC4D713BE12A700063072 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				15FFC4D813BE12A700063072 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		15FFC4DD13BE12A700063072 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				15FFC4DE13BE12A700063072 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		15FFC4E313BE12A700063072 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				15FFC4E413BE12A700063072 /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		15FFC4E613BE12A700063072 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		15FFC4E713BE12A700063072 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		15FFC4E913BE12A700063072 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "FabScan3D/FabScan-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				INFOPLIST_FILE = "FabScan3D/FabScan-Info.plist";
+				PRODUCT_NAME = FabScan;
+				SDKROOT = "";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		15FFC4EA13BE12A700063072 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "FabScan3D/FabScan-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				INFOPLIST_FILE = "FabScan3D/FabScan-Info.plist";
+				PRODUCT_NAME = FabScan;
+				SDKROOT = "";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		15FFC4C413BE12A700063072 /* Build configuration list for PBXProject "FabScan" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				15FFC4E613BE12A700063072 /* Debug */,
+				15FFC4E713BE12A700063072 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		15FFC4E813BE12A700063072 /* Build configuration list for PBXNativeTarget "FabScan" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				15FFC4E913BE12A700063072 /* Debug */,
+				15FFC4EA13BE12A700063072 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 15FFC4C113BE12A700063072 /* Project object */;
+}

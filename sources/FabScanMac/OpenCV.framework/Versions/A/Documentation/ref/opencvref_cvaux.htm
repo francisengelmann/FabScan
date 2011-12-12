@@ -1,0 +1,762 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html><head>
+<link rel="STYLESHEET" href="opencvref.css" charset="ISO-8859-1" type="text/css">
+<title>OpenCV: Experimental and Obsolete Functionality</title>
+</head><body>
+
+<h1>Experimental and Obsolete Functionality Reference</h1>
+
+<p>
+The functionality resides in cvaux library. To use it in your application, place
+#include "cvaux.h" in your source files and:<ul>
+<li>In case of Win32 link the app against cvaux.lib that is import library for cvaux.dll
+<li>In case of Linux use -lcvaux compiler option
+</ul></p>
+
+<hr><p><ul>
+<li><a href="#aux_stereo">Stereo Correspondence Functions</a>
+<ul>
+<li><a href="#decl_cvFindStereoCorrespondence">FindStereoCorrespondence</a>
+</ul>
+<li><a href="#aux_viewmorphing">View Morphing Functions</a>
+<ul>
+<li><a href="#decl_cvMakeScanlines">MakeScanlines</a>
+<li><a href="#decl_cvPreWarpImage">PreWarpImage</a>
+<li><a href="#decl_cvFindRuns">FindRuns</a>
+<li><a href="#decl_cvDynamicCorrespondMulti">DynamicCorrespondMulti</a>
+<li><a href="#decl_cvMakeAlphaScanlines">MakeAlphaScanlines</a>
+<li><a href="#decl_cvMorphEpilinesMulti">MorphEpilinesMulti</a>
+<li><a href="#decl_cvPostWarpImage">PostWarpImage</a>
+<li><a href="#decl_cvDeleteMoire">DeleteMoire</a>
+</ul>
+<li><a href="#aux_3dTracking">3D Tracking Functions</a>
+<ul>
+<li><a href="#decl_cv3dTrackerCalibrateCameras">3dTrackerCalibrateCameras</a>
+<li><a href="#decl_cv3dTrackerLocateObjects">3dTrackerLocateObjects</a>
+</ul>
+<li><a href="#aux_pca">Eigen Objects (PCA) Functions</a>
+<ul>
+<li><a href="#decl_cvCalcCovarMatrixEx">CalcCovarMatrixEx</a>
+<li><a href="#decl_cvCalcEigenObjects">CalcEigenObjects</a>
+<li><a href="#decl_cvCalcDecompCoeff">CalcDecompCoeff</a>
+<li><a href="#decl_cvEigenDecomposite">EigenDecomposite</a>
+<li><a href="#decl_cvEigenProjection">EigenProjection</a>
+</ul>
+<li><a href="#aux_hmm">Embedded Hidden Markov Models Functions</a>
+<ul>
+<li><a href="#decl_CvHMM">HMM</a>
+<li><a href="#decl_CvImgObsInfo">ImgObsInfo</a>
+<li><a href="#decl_cvCreate2DHMM">Create2DHMM</a>
+<li><a href="#decl_cvRelease2DHMM">Release2DHMM</a>
+<li><a href="#decl_cvCreateObsInfo">CreateObsInfo</a>
+<li><a href="#decl_cvReleaseObsInfo">ReleaseObsInfo</a>
+<li><a href="#decl_cvImgToObs_DCT">ImgToObs_DCT</a>
+<li><a href="#decl_cvUniformImgSegm">UniformImgSegm</a>
+<li><a href="#decl_cvInitMixSegm">InitMixSegm</a>
+<li><a href="#decl_cvEstimateHMMStateParams">EstimateHMMStateParams</a>
+<li><a href="#decl_cvEstimateTransProb">EstimateTransProb</a>
+<li><a href="#decl_cvEstimateObsProb">EstimateObsProb</a>
+<li><a href="#decl_cvEViterbi">EViterbi</a>
+<li><a href="#decl_cvMixSegmL2">MixSegmL2</a>
+</ul>
+</ul></p>
+
+<hr><h2><a name="aux_stereo">Stereo Correspondence Functions</a></h2>
+
+<hr><h3><a name="decl_cvFindStereoCorrespondence">FindStereoCorrespondence</a></h3>
+<p class="Blurb">Calculates disparity for stereo-pair</p>
+<pre>
+cvFindStereoCorrespondence(
+                   const  CvArr* leftImage, const  CvArr* rightImage,
+                   int     mode, CvArr*  depthImage,
+                   int     maxDisparity,
+                   double  param1, double  param2, double  param3,
+                   double  param4, double  param5  );
+</pre><p><dl>
+
+<dt>leftImage<dd>Left image of stereo pair, rectified grayscale 8-bit image
+<dt>rightImage<dd>Right image of stereo pair, rectified grayscale 8-bit image
+<dt>mode<dd>Algorithm used to find a disparity (now only CV_DISPARITY_BIRCHFIELD is supported)
+<dt>depthImage<dd>Destination depth image, grayscale 8-bit image that codes the scaled disparity,
+                  so that the zero disparity (corresponding to the points that are very far from the cameras)
+                  maps to 0, maximum disparity maps to 255.
+<dt>maxDisparity<dd>Maximum possible disparity. The closer the objects to the cameras, the larger value should be specified here.
+                    Too big values slow down the process significantly.
+<dt>param1, param2, param3, param4, param5<dd> - parameters of algorithm.
+For example, param1 is the constant occlusion penalty,
+param2 is the constant match reward, param3 defines a highly reliable region
+(set of contiguous pixels whose reliability is at least param3),
+param4 defines a moderately reliable region, param5 defines a slightly reliable region.
+If some parameter is omitted default value is used.
+In Birchfield's algorithm param1 = 25,  param2 = 5, param3 = 12, param4 = 15, param5 = 25
+(These values have been taken from
+"Depth Discontinuities by Pixel-to-Pixel Stereo" Stanford University Technical Report STAN-CS-TR-96-1573, July 1996.)
+</dl></p><p>
+
+The function <code>cvFindStereoCorrespondence</code> calculates disparity map
+for two rectified grayscale images.
+
+<p>Example. Calculating disparity for pair of 8-bit color images</h4>
+<pre>
+/*---------------------------------------------------------------------------------*/
+IplImage* srcLeft = cvLoadImage("left.jpg",1);
+IplImage* srcRight = cvLoadImage("right.jpg",1);
+IplImage* leftImage = cvCreateImage(cvGetSize(srcLeft), IPL_DEPTH_8U, 1);
+IplImage* rightImage = cvCreateImage(cvGetSize(srcRight), IPL_DEPTH_8U, 1);
+IplImage* depthImage = cvCreateImage(cvGetSize(srcRight), IPL_DEPTH_8U, 1);
+
+cvCvtColor(srcLeft, leftImage, CV_BGR2GRAY);
+cvCvtColor(srcRight, rightImage, CV_BGR2GRAY);
+
+cvFindStereoCorrespondence( leftImage, rightImage, CV_DISPARITY_BIRCHFIELD, depthImage, 50, 15, 3, 6, 8, 15 );
+/*---------------------------------------------------------------------------------*/
+</pre>
+<p>And here is the example stereo pair that can be used to test the example</p>
+<p>
+<img src="pics/left.jpg">
+<img src="pics/right.jpg">
+</p>
+
+
+<hr><h2><a name="aux_viewmorphing">View Morphing Functions</a></h2>
+
+<hr><h3><a name="decl_cvMakeScanlines">MakeScanlines</a></h3>
+<p class="Blurb">Calculates scanlines coordinates for two cameras by fundamental matrix</p>
+<pre>
+void cvMakeScanlines( const CvMatrix3* matrix, CvSize img_size, int* scanlines1,
+                      int* scanlines2, int* lengths1, int* lengths2, int* line_count );
+</pre><p><dl>
+<dt>matrix<dd>Fundamental matrix.
+<dt>imgSize<dd>Size of the image.
+<dt>scanlines1<dd>Pointer to the array of calculated scanlines of the first image.
+<dt>scanlines2<dd>Pointer to the array of calculated scanlines of the second image.
+<dt>lengths1<dd>Pointer to the array of calculated lengths (in pixels) of the first image
+scanlines.
+<dt>lengths2<dd>Pointer to the array of calculated lengths (in pixels) of the second image
+scanlines.
+<dt>line_count<dd>Pointer to the variable that stores the number of scanlines.
+</dl></p><p>
+The function <code>cvMakeScanlines</code> finds coordinates of scanlines for two images.
+<p>
+This function returns the number of scanlines. The function does nothing except
+calculating the number of scanlines if the pointers <code>scanlines1</code> or <code>scanlines2</code> are
+equal to zero.
+</p>
+
+</p><hr><h3><a name="decl_cvPreWarpImage">PreWarpImage</a></h3>
+<p class="Blurb">Rectifies image</p>
+<pre>
+void cvPreWarpImage( int line_count, IplImage* img, uchar* dst,
+                     int* dst_nums, int* scanlines );
+</pre><p><dl>
+<dt>line_count<dd>Number of scanlines for the image.
+<dt>img<dd>Image to prewarp.
+<dt>dst<dd>Data to store for the prewarp image.
+<dt>dst_nums<dd>Pointer to the array of lengths of scanlines.
+<dt>scanlines<dd>Pointer to the array of coordinates of scanlines.
+</dl></p><p>
+The function <code>cvPreWarpImage</code> rectifies the image so that the scanlines in the
+rectified image are horizontal. The output buffer of size
+<code>max(width,height)*line_count*3</code> must be allocated before calling the function.
+
+</p><hr><h3><a name="decl_cvFindRuns">FindRuns</a></h3>
+<p class="Blurb">Retrieves scanlines from rectified image and breaks them down into runs</p>
+<pre>
+void cvFindRuns( int line_count, uchar* prewarp1, uchar* prewarp2,
+                 int* line_lengths1, int* line_lengths2,
+                 int* runs1, int* runs2,
+                 int* num_runs1, int* num_runs2 );
+</pre><p><dl>
+<dt>line_count<dd>Number of the scanlines.
+<dt>prewarp1<dd>Prewarp data of the first image.
+<dt>prewarp2<dd>Prewarp data of the second image.
+<dt>line_lengths1<dd>Array of lengths of scanlines in the first image.
+<dt>line_lengths2<dd>Array of lengths of scanlines in the second image.
+<dt>runs1<dd>Array of runs in each scanline in the first image.
+<dt>runs2<dd>Array of runs in each scanline in the second image.
+<dt>num_runs1<dd>Array of numbers of runs in each scanline in the first image.
+<dt>num_runs2<dd>Array of numbers of runs in each scanline in the second image.
+</dl></p><p>
+The function <code>cvFindRuns</code> retrieves scanlines from the rectified image and breaks
+each scanline down into several runs, that is, series of pixels of almost the
+same brightness.
+
+</p><hr><h3><a name="decl_cvDynamicCorrespondMulti">DynamicCorrespondMulti</a></h3>
+<p class="Blurb">Finds correspondence between two sets of runs of two warped images</p>
+<pre>
+void cvDynamicCorrespondMulti( int line_count, int* first, int* first_runs,
+                               int* second, int* second_runs,
+                               int* first_corr, int* second_corr );
+</pre><p><dl>
+<dt>line_count<dd>Number of scanlines.
+<dt>first<dd>Array of runs of the first image.
+<dt>first_runs<dd>Array of numbers of runs in each scanline of the first image.
+<dt>second<dd>Array of runs of the second image.
+<dt>second_runs<dd>Array of numbers of runs in each scanline of the second image.
+<dt>first_corr<dd>Pointer to the array of correspondence information found for the first
+runs.
+<dt>second_corr<dd>Pointer to the array of correspondence information found for the
+second runs.
+</dl></p><p>
+The function <code>cvDynamicCorrespondMulti</code> finds correspondence between two sets of
+runs of two images. Memory must be allocated before calling this function.
+Memory size for one array of correspondence information is
+<div><code>max( width,height )* numscanlines*3*sizeof ( int )</code> .
+
+</p><hr><h3><a name="decl_cvMakeAlphaScanlines">MakeAlphaScanlines</a></h3>
+<p class="Blurb">Calculates coordinates of scanlines of image from virtual camera</p>
+<pre>
+void cvMakeAlphaScanlines( int* scanlines1, int* scanlines2,
+                           int* scanlinesA, int* lengths,
+                           int line_count, float alpha );
+</pre><p><dl>
+<dt>scanlines1<dd>Pointer to the array of the first scanlines.
+<dt>scanlines2<dd>Pointer to the array of the second scanlines.
+<dt>scanlinesA<dd>Pointer to the array of the scanlines found in the virtual image.
+<dt>lengths<dd>Pointer to the array of lengths of the scanlines found in the virtual
+image.
+<dt>line_count<dd>Number of scanlines.
+<dt>alpha<dd>Position of virtual camera <code>(0.0 - 1.0)</code> .
+</dl></p><p>
+The function <code>cvMakeAlphaScanlines</code> finds coordinates of scanlines for the virtual
+camera with the given camera position.
+<p>
+Memory must be allocated before calling this function. Memory size for the array
+of correspondence runs is <code>numscanlines*2*4*sizeof(int)</code> . Memory size for the
+array of the scanline lengths is <code>numscanlines*2*4*sizeof(int)</code> .
+</p>
+
+</p><hr><h3><a name="decl_cvMorphEpilinesMulti">MorphEpilinesMulti</a></h3>
+<p class="Blurb">Morphs two pre-warped images using information about stereo correspondence</p>
+<pre>
+void cvMorphEpilinesMulti( int line_count, uchar* first_pix, int* first_num,
+                           uchar* second_pix, int* second_num,
+                           uchar* dst_pix, int* dst_num,
+                           float alpha, int* first, int* first_runs,
+                           int* second, int* second_runs,
+                           int* first_corr, int* second_corr );
+</pre><p><dl>
+<dt>line_count<dd>Number of scanlines in the prewarp image.
+<dt>first_pix<dd>Pointer to the first prewarp image.
+<dt>first_num<dd>Pointer to the array of numbers of points in each scanline in the first
+image.
+<dt>second_pix<dd>Pointer to the second prewarp image.
+<dt>second_num<dd>Pointer to the array of numbers of points in each scanline in the
+second image.
+<dt>dst_pix<dd>Pointer to the resulting morphed warped image.
+<dt>dst_num<dd>Pointer to the array of numbers of points in each line.
+<dt>alpha<dd>Virtual camera position <code>(0.0 - 1.0)</code> .
+<dt>first<dd>First sequence of runs.
+<dt>first_runs<dd>Pointer to the number of runs in each scanline in the first image.
+<dt>second<dd>Second sequence of runs.
+<dt>second_runs<dd>Pointer to the number of runs in each scanline in the second image.
+<dt>first_corr<dd>Pointer to the array of correspondence information found for the first
+runs.
+<dt>second_corr<dd>Pointer to the array of correspondence information found for the
+second runs.
+</dl></p><p>
+The function <code>cvMorphEpilinesMulti</code> morphs two pre-warped images using information
+about correspondence between the scanlines of two images.
+
+</p><hr><h3><a name="decl_cvPostWarpImage">PostWarpImage</a></h3>
+<p class="Blurb">Warps rectified morphed image back</p>
+<pre>
+void cvPostWarpImage( int line_count, uchar* src, int* src_nums,
+                      IplImage* img, int* scanlines );
+</pre><p><dl>
+<dt>line_count<dd>Number of the scanlines.
+<dt>src<dd>Pointer to the prewarp image virtual image.
+<dt>src_nums<dd>Number of the scanlines in the image.
+<dt>img<dd>Resulting unwarp image.
+<dt>scanlines<dd>Pointer to the array of scanlines data.
+</dl></p><p>
+The function <code>cvPostWarpImage</code> warps the resultant image from the virtual camera by
+storing its rows across the scanlines whose coordinates are calculated by
+<a href="#decl_cvMakeAlphaScanlines">cvMakeAlphaScanlines</a>.
+
+</p><hr><h3><a name="decl_cvDeleteMoire">DeleteMoire</a></h3>
+<p class="Blurb">Deletes moire in given image</p>
+<pre>
+void cvDeleteMoire( IplImage* img );
+</pre><p><dl>
+<dt>img<dd>Image.
+</dl></p><p>
+The function <code>cvDeleteMoire</code> deletes moire from the given image. The post-warped
+image may have black (un-covered) points because of possible holes between
+neighboring scanlines. The function deletes moire (black pixels) from the image
+by substituting neighboring pixels for black pixels. If all the scanlines are
+horizontal, the function may be omitted.</p>
+
+<hr><h2><a name="aux_3dTracking">3D Tracking Functions</a></h2>
+
+<p>The section discusses functions for tracking objects in 3d space using a stereo camera.
+Besides C API, there is DirectShow <a href="../appPage/3dTracker/3dTrackerFilter.htm">3dTracker</a> filter
+and the wrapper application <a href="../appPage/3dTracker/3dTracker.htm">3dTracker</a>.
+<a href="../appPage/3dTracker/3dTrackerTesting.htm">Here</a> you may find a description how to test the filter on sample data.</p>
+
+<hr><h3><a name="decl_cv3dTrackerCalibrateCameras">3dTrackerCalibrateCameras</a></h3>
+<p class="Blurb">Simultaneously determines position and orientation of multiple cameras</p>
+<pre>
+CvBool cv3dTrackerCalibrateCameras(int num_cameras,
+           const Cv3dTrackerCameraIntrinsics camera_intrinsics[],
+           CvSize checkerboard_size,
+           IplImage *samples[],
+           Cv3dTrackerCameraInfo camera_info[]);
+</pre><p><dl>
+<dt>num_cameras<dd>the number of cameras to calibrate. This is the size of each of the
+three array parameters.
+<dt>camera_intrinsics<dd>camera intrinsics for each camera, such as determined by CalibFilter.
+<dt>checkerboard_size<dd>the width and height (in number of squares) of the checkerboard.
+<dt>samples<dd>images from each camera, with a view of the checkerboard.
+<dt>camera_info<dd>filled in with the results of the camera calibration. This is passed into
+<a href="#decl_cv3dTrackerLocateObjects">3dTrackerLocateObjects</a> to do tracking.
+</dl></p>
+<p>
+The function <code>cv3dTrackerCalibrateCameras</code>
+searches for a checkerboard of the specified size in each
+of the images. For each image in which it finds the checkerboard, it fills
+in the corresponding slot in <code>camera_info</code> with the position
+and orientation of the camera
+relative to the checkerboard and sets the <code>valid</code> flag.
+If it finds the checkerboard in all the images, it returns true;
+otherwise it returns false.
+</p><p>
+This function does not change the members of the <code>camera_info</code> array
+that correspond to images in which the checkerboard was not found.
+This allows you to calibrate each camera independently, instead of
+simultaneously.
+To accomplish this, do the following:
+<ol>
+<li>clear all the <code>valid</code> flags before calling this function the first time;</LI>
+<li>call this function with each set of images;</LI>
+<li> check all the <code>valid</code> flags after each call.
+When all the <code>valid</code> flags are set, calibration is complete.
+</li>
+</ol>
+Note that this method works well only if the checkerboard is rigidly mounted;
+if it is handheld, all the cameras should be calibrated simultaneously
+to get an accurate result.
+To ensure that all cameras are calibrated simultaneously,
+ignore the <code>valid</code> flags and
+use the return value to decide when calibration is complete.
+</p>
+
+<hr><h3><a name="decl_cv3dTrackerLocateObjects">3dTrackerLocateObjects</a></h3>
+<p class="Blurb">Determines 3d location of tracked objects</p>
+<pre>
+int  cv3dTrackerLocateObjects(int num_cameras,
+         int num_objects,
+         const Cv3dTrackerCameraInfo camera_info[],
+         const Cv3dTracker2dTrackedObject tracking_info[],
+         Cv3dTrackerTrackedObject tracked_objects[]);
+</pre><p><dl>
+<dt>num_cameras<dd>the number of cameras.
+<dt>num_objects<dd>the maximum number of objects found by any camera. (Also the
+maximum number of objects returned in <code>tracked_objects</code>.)
+<dt>camera_info<dd>camera position and location information for each camera,
+as determined by <a href="#decl_cv3dTrackerCalibrateCameras">3dTrackerCalibrateCameras</a>.
+<dt>tracking_info<dd>the 2d position of each object as seen by each camera. Although
+this is specified as a one-dimensional array, it is actually a
+two-dimensional array:
+<code>const Cv3dTracker2dTrackedObject tracking_info[num_cameras][num_objects]</code>.
+The <code>id</code> field of any unused slots must be -1. Ids need not
+be ordered or consecutive.
+<dt>tracked_objects<dd>filled in with the results.
+</dl></p>
+<p>
+The function <code>cv3dTrackerLocateObjects</code>
+determines the 3d position of tracked objects
+based on the 2d tracking information from multiple cameras and
+the camera position and orientation information computed by
+<a href="#decl_3dTrackerCalibrateCameras">3dTrackerCalibrateCameras</a>.
+It locates any objects with the same <code>id</code> that are tracked by more
+than one camera.
+It fills in the <code>tracked_objects</code> array and
+returns the number of objects located. The <code>id</code> fields of
+any unused slots in <code>tracked_objects</code> are set to -1.
+</p>
+
+
+
+<hr><h2><a name="aux_pca">Eigen Objects (PCA) Functions</a></h2>
+
+<p>The functions described in this section do PCA analysis and compression for
+a set of 8-bit images that may not fit into memory all together.
+If your data fits into memory and the vectors are not 8-bit (or you want a simpler
+interface), use
+<a href="OpenCVRef_BasicFuncs.htm#decl_cvCalcCovarMatrix">cvCalcCovarMatrix</a>,
+<a href="OpenCVRef_BasicFuncs.htm#decl_cvSVD">cvSVD</a> and
+<a href="OpenCVRef_BasicFuncs.htm#decl_cvGEMM">cvGEMM</a>
+to do PCA</p>
+
+<hr><h3><a name="decl_cvCalcCovarMatrixEx">CalcCovarMatrixEx</a></h3>
+<p class="Blurb">Calculates covariance matrix for group of input objects</p>
+<pre>
+void cvCalcCovarMatrixEx( int object_count, void* input, int io_flags,
+                          int iobuf_size, uchar* buffer, void* userdata,
+                          IplImage* avg, float* covar_matrix );
+</pre><p><dl>
+<dt>object_count<dd>Number of source objects.
+<dt>input<dd>Pointer either to the array of <code>IplImage</code> input objects or to the read
+callback function according to the value of the parameter <code>ioFlags</code>.
+<dt>io_flags<dd>Input/output flags.
+<dt>iobuf_size<dd>Input/output buffer size.
+<dt>buffer<dd>Pointer to the input/output buffer.
+<dt>userdata<dd>Pointer to the structure that contains all necessary data for the
+<dt>callback<dd>functions.
+<dt>avg<dd>Averaged object.
+<dt>covar_matrix<dd>Covariance matrix. An output parameter; must be allocated before the
+call.
+</dl><p>
+The function <code>cvCalcCovarMatrixEx</code> calculates a covariance matrix of the input
+objects group using previously calculated averaged object. Depending on <code>ioFlags</code>
+parameter it may be used either in direct access or callback mode. If <code>ioFlags</code> is
+not <code>CV_EIGOBJ_NO_CALLBACK</code>, buffer must be allocated before calling the
+function.
+
+</p><hr><h3><a name="decl_cvCalcEigenObjects">CalcEigenObjects</a></h3>
+<p class="Blurb">Calculates orthonormal eigen basis and averaged object for group of input
+objects</p>
+<pre>
+void cvCalcEigenObjects( int nObjects, void* input, void* output, int ioFlags,
+                         int ioBufSize, void* userData, CvTermCriteria* calcLimit,
+                         IplImage* avg, float* eigVals );
+</pre><p><dl>
+<dt>nObjects<dd>Number of source objects.
+<dt>input<dd>Pointer either to the array of <code>IplImage</code> input objects or to the read
+callback function according to the value of the parameter <code>ioFlags</code>.
+<dt>output<dd>Pointer either to the array of eigen objects or to the write callback
+function according to the value of the parameter ioFlags .
+<dt>ioFlags<dd>Input/output flags.
+<dt>ioBufSize<dd>Input/output buffer size in bytes. The size is zero, if unknown.
+<dt>userData<dd>Pointer to the structure that contains all necessary data for the
+callback functions.
+<dt>calcLimit<dd>Criteria that determine when to stop calculation of eigen objects.
+<dt>avg<dd>Averaged object.
+<dt>eigVals<dd>Pointer to the eigenvalues array in the descending order; may be <code>NULL</code> .
+</dl><p>
+The function <code>cvCalcEigenObjects</code> calculates orthonormal eigen basis and the
+averaged object for a group of the input objects. Depending on <code>ioFlags</code> parameter
+it may be used either in direct access or callback mode. Depending on the
+parameter <code>calcLimit</code>, calculations are finished either after first
+<code>calcLimit.max_iter</code> dominating eigen objects are retrieved or if the ratio of the
+current eigenvalue to the largest eigenvalue comes down to <code>calcLimit.epsilon</code>
+threshold. The value <code>calcLimit -> type</code> must be <code>CV_TERMCRIT_NUMB,
+CV_TERMCRIT_EPS</code>, or <code>CV_TERMCRIT_NUMB | CV_TERMCRIT_EPS</code> . The function returns
+the real values <code>calcLimit->max_iter</code> and <code>calcLimit->epsilon</code> .
+<p>
+The function also calculates the averaged object, which must be created
+previously. Calculated eigen objects are arranged according to the corresponding
+eigenvalues in the descending order.
+</p>
+The parameter <code>eigVals</code> may be equal to <code>NULL</code>, if eigenvalues are not needed.
+<p>
+The function <code>cvCalcEigenObjects</code> uses the function
+<a href="#decl_cvCalcCovarMatrixEx">cvCalcCovarMatrixEx</a>.
+</p>
+
+<hr><h3><a name="decl_cvCalcDecompCoeff">CalcDecompCoeff</a></h3>
+<p class="Blurb">Calculates decomposition coefficient of input object</p>
+<pre>
+double cvCalcDecompCoeff( IplImage* obj, IplImage* eigObj, IplImage* avg );
+</pre><p><dl>
+<dt>obj<dd>Input object.
+<dt>eigObj<dd>Eigen object.
+<dt>avg<dd>Averaged object.
+</dl><p>
+The function <code>cvCalcDecompCoeff</code> calculates one decomposition coefficient of the
+input object using the previously calculated eigen object and the averaged
+object.
+</p>
+
+
+<hr><h3><a name="decl_cvEigenDecomposite">EigenDecomposite</a></h3>
+<p class="Blurb">Calculates all decomposition coefficients for input object</p>
+<pre>
+void cvEigenDecomposite( IplImage* obj, int eigenvec_count, void* eigInput,
+                         int ioFlags, void* userData, IplImage* avg, float* coeffs );
+</pre><p><dl>
+<dt>obj<dd>Input object.
+<dt>eigenvec_count<dd>Number of eigen objects.
+<dt>eigInput<dd>Pointer either to the array of <code>IplImage</code> input objects or to the read
+callback function according to the value of the parameter <code>ioFlags</code>.
+<dt>ioFlags<dd>Input/output flags.
+<dt>userData<dd>Pointer to the structure that contains all necessary data for the
+callback functions.
+<dt>avg<dd>Averaged object.
+<dt>coeffs<dd>Calculated coefficients; an output parameter.
+</dl><p>
+The function <code>cvEigenDecomposite</code> calculates all decomposition coefficients for the
+input object using the previously calculated eigen objects basis and the
+averaged object. Depending on <code>ioFlags</code> parameter it may be used either in direct
+access or callback mode.
+</p>
+
+
+<hr><h3><a name="decl_cvEigenProjection">EigenProjection</a></h3>
+<p class="Blurb">Calculates object projection to the eigen sub-space</p>
+<pre>
+void cvEigenProjection( void* input_vecs, int eigenvec_count, int io_flags, void* userdata,
+                        float* coeffs, IplImage* avg, IplImage* proj );
+</pre><p><dl>
+<dt>input_vec<dd>Pointer to either an array of <code>IplImage</code> input objects or to a
+callback function, depending on <code>io_flags</code>.
+<dt>eigenvec_count<dd>Number of eigenvectors.
+<dt>io_flags<dd>Input/output flags; see <a href="#decl_cvCalcEigenObjects">cvCalcEigenObjects</a>.
+<dt>userdata<dd>Pointer to the structure that contains all necessary data for the
+callback functions.
+<dt>coeffs<dd>Previously calculated decomposition coefficients.
+<dt>avg<dd>Average vector, calculated by <a href="#decl_cvCalcEigenObjects">cvCalcEigenObjects</a>.
+<dt>proj<dd>Projection to the eigen sub-space.
+</dl><p>
+The function <code>cvEigenProjection</code> calculates an object projection to the eigen
+sub-space or, in other words, restores an object using previously calculated
+eigen objects basis, averaged object, and decomposition coefficients of the
+restored object. Depending on <code>io_flags</code> parameter it may be used either in direct
+access or callback mode.</p>
+
+<hr><h2><a name="aux_hmm">Embedded Hidden Markov Models Functions</a></h2>
+
+<p>
+In order to support embedded models the user must define structures to represent
+1D HMM and 2D embedded HMM model.
+</p>
+<hr><h3><a name="decl_CvHMM">CvHMM</a></h3>
+<p class="Blurb">Embedded HMM Structure</p>
+<pre>
+    typedef struct _CvEHMM 
+    {
+        int level; 
+        int num_states; 
+        float* transP; 
+        float** obsProb; 
+        union 
+        { 
+            CvEHMMState* state;
+            struct _CvEHMM* ehmm; 
+        } u;
+    } CvEHMM; 
+</pre><p><dl>
+<dt>level<dd>Level of embedded HMM. If <code>level ==0</code>, HMM is most external. In 2D HMM
+there are two types of HMM: 1 external and several embedded. External HMM has
+<code>level ==1</code>, embedded HMMs have <code>level ==0</code> .
+<dt>num_states<dd>Number of states in 1D HMM.
+<dt>transP<dd>State-to-state transition probability, square matrix <code>(num_state&times;num_state )</code>.
+<dt>obsProb<dd>Observation probability matrix.
+<dt>state<dd>Array of HMM states. For the last-level HMM, that is, an HMM without
+embedded HMMs, HMM states are real.
+<dt>ehmm<dd>Array of embedded HMMs. If HMM is not last-level, then HMM states are not
+real and they are HMMs.
+</dl></p>
+<p>For representation of observations the following structure is defined:</p>
+
+<hr><h3><a name="decl_CvImgObsInfo">CvImgObsInfo</a></h3>
+<p class="Blurb">Image Observation Structure</p>
+<pre>
+    typedef struct CvImgObsInfo
+    {
+        int obs_x;
+        int obs_y;
+        int obs_size;
+        float** obs;
+        int* state;
+        int* mix;
+    } CvImgObsInfo;
+</pre><p><dl>
+<dt>obs_x<dd>Number of observations in the horizontal direction.
+<dt>obs_y<dd>Number of observations in the vertical direction.
+<dt>obs_size<dd>Length of every observation vector.
+<dt>obs<dd>Pointer to observation vectors stored consequently. Number of vectors is
+<code>obs_x*obs_y</code> .
+<dt>state<dd>Array of indices of states, assigned to every observation vector.
+<dt>mix<dd>Index of mixture component, corresponding to the observation vector within
+an assigned state.
+</dl></p> 
+
+
+<hr><h3><a name="decl_cvCreate2DHMM">Create2DHMM</a></h3>
+<p class="Blurb">Creates 2D embedded HMM</p>
+<pre>
+CvEHMM* cvCreate2DHMM( int* stateNumber, int* numMix, int obsSize );
+</pre><p><dl>
+<dt>stateNumber<dd>Array, the first element of the which specifies the number of
+superstates in the HMM. All subsequent elements specify the number of states in
+every embedded HMM, corresponding to each superstate. So, the length of the
+array is <code>stateNumber [0]+1</code> .
+<dt>numMix<dd>Array with numbers of Gaussian mixture components per each internal
+state. The number of elements in the array is equal to number of internal states
+in the HMM, that is, superstates are not counted here.
+<dt>obsSize<dd>Size of observation vectors to be used with created HMM.
+</dl><p>
+The function <code>cvCreate2DHMM</code> returns the created structure of the type <a href="#decl_CvEHMM">CvEHMM</a> with
+specified parameters.
+
+</p><hr><h3><a name="decl_cvRelease2DHMM">Release2DHMM</a></h3>
+<p class="Blurb">Releases 2D embedded HMM</p>
+<pre>
+void cvRelease2DHMM(CvEHMM** hmm );
+</pre><p><dl>
+<dt>hmm<dd>Address of pointer to HMM to be released.
+</dl><p>
+The function <code>cvRelease2DHMM</code> frees all the memory used by HMM and clears the
+pointer to HMM.
+
+</p><hr><h3><a name="decl_cvCreateObsInfo">CreateObsInfo</a></h3>
+<p class="Blurb">Creates structure to store image observation vectors</p>
+<pre>
+CvImgObsInfo* cvCreateObsInfo( CvSize numObs, int obsSize );
+</pre><p><dl>
+<dt>numObs<dd>Numbers of observations in the horizontal and vertical directions. For
+the given image and scheme of extracting observations the parameter can be
+computed via the macro <code>CV_COUNT_OBS( roi, dctSize, delta, numObs )</code>, where <code>roi,
+dctSize, delta, numObs</code> are the pointers to structures of the type <a href="#decl_CvSize ">CvSize </a>. The
+pointer <code>roi</code> means size of <code>roi</code> of image observed, <code>numObs</code> is the output parameter
+of the macro.
+<dt>obsSize<dd>Size of observation vectors to be stored in the structure.
+</dl><p>
+The function <code>cvCreateObsInfo</code> creates new structures to store image observation
+vectors. For definitions of the parameters <code>roi, dctSize</code>, and <code>delta</code> see the
+specification of The function <code>cvImgToObs_DCT</code>.
+
+</p><hr><h3><a name="decl_cvReleaseObsInfo">ReleaseObsInfo</a></h3>
+<p class="Blurb">Releases observation vectors structure</p>
+<pre>
+void cvReleaseObsInfo( CvImgObsInfo** obsInfo );
+</pre><p><dl>
+<dt>obsInfo<dd>Address of the pointer to the structure <a href="#decl_CvImgObsInfo">CvImgObsInfo</a> .
+</dl><p>
+The function <code>cvReleaseObsInfo</code> frees all memory used by observations and clears
+pointer to the structure <a href="#decl_CvImgObsInfo">CvImgObsInfo</a> .
+
+</p><hr><h3><a name="decl_cvImgToObs_DCT">ImgToObs_DCT</a></h3>
+<p class="Blurb">Extracts observation vectors from image</p>
+<pre>
+void cvImgToObs_DCT( IplImage* image, float* obs, CvSize dctSize,
+                     CvSize obsSize, CvSize delta );
+</pre><p><dl>
+<dt>image<dd>Input image.
+<dt>obs<dd>Pointer to consequently stored observation vectors.
+<dt>dctSize<dd>Size of image blocks for which DCT (Discrete Cosine Transform)
+coefficients are to be computed.
+<dt>obsSize<dd>Number of the lowest DCT coefficients in the horizontal and vertical
+directions to be put into the observation vector.
+<dt>delta<dd>Shift in pixels between two consecutive image blocks in the horizontal and
+vertical directions.
+</dl><p>
+The function <code>cvImgToObs_DCT</code> extracts observation vectors, that is, DCT
+coefficients, from the image. The user must pass <code>obsInfo.obs</code> as the parameter
+<code>obs</code> to use this function with other HMM functions and use the structure <code>obsInfo</code>
+of the <a href="#decl_CvImgObsInfo">CvImgObsInfo</a> type.
+</p><p>
+<code>Calculating Observations for HMM</code>
+<pre>
+    CvImgObsInfo* obs_info;
+
+        ...
+
+        cvImgToObs_DCT( image,obs_info->obs, //!!!
+
+        dctSize, obsSize, delta );
+</pre>
+
+</p><hr><h3><a name="decl_cvUniformImgSegm">UniformImgSegm</a></h3>
+<p class="Blurb">Performs uniform segmentation of image observations by HMM states</p>
+<pre>
+void cvUniformImgSegm( CvImgObsInfo* obsInfo, CvEHMM* hmm );
+</pre><p><dl>
+<dt>obsInfo<dd>Observations structure.
+<dt>hmm<dd>HMM structure.
+</dl><p>
+The function <code>cvUniformImgSegm</code> segments image observations by HMM states uniformly
+(see <u><font color=blue>Initial Segmentation</font></u> for 2D Embedded HMM for 2D embedded HMM with 5
+superstates and 3, 6, 6, 6, 3 internal states of every corresponding
+superstate).
+<p>
+<font color=blue>  Initial Segmentation for 2D Embedded HMM </font>
+</p>
+<p>
+<img align=center src="pics/face.png">  
+</p>
+
+</p><hr><h3><a name="decl_cvInitMixSegm">InitMixSegm</a></h3>
+<p class="Blurb">Segments all observations within every internal state of HMM by state mixture
+components</p>
+<pre>
+void cvInitMixSegm( CvImgObsInfo** obsInfoArray, int numImg, CvEHMM* hmm );
+</pre><p><dl>
+<dt>obsInfoArray<dd>Array of pointers to the observation structures.
+<dt>numImg<dd>Length of above array.
+<dt>hmm<dd>HMM.
+</dl><p>
+The function <code>cvInitMixSegm</code> takes a group of observations from several training
+images already segmented by states and splits a set of observation vectors
+within every internal HMM state into as many clusters as the number of mixture
+components in the state.
+
+</p><hr><h3><a name="decl_cvEstimateHMMStateParams">EstimateHMMStateParams</a></h3>
+<p class="Blurb">Estimates all parameters of every HMM state</p>
+<pre>
+void cvEstimateHMMStateParams( CvImgObsInfo** obsInfoArray, int numImg, CvEHMM* hmm );
+</pre><p><dl>
+<dt>obsInfoArray<dd>Array of pointers to the observation structures.
+<dt>numImg<dd>Length of the array.
+<dt>hmm<dd>HMM.
+</dl><p>
+The function <code>cvEstimateHMMStateParams</code> computes all inner parameters of every HMM
+state, including Gaussian means, variances, etc.
+
+</p><hr><h3><a name="decl_cvEstimateTransProb">EstimateTransProb</a></h3>
+<p class="Blurb">Computes transition probability matrices for embedded HMM</p>
+<pre>
+void cvEstimateTransProb( CvImgObsInfo** obsInfoArray, int numImg, CvEHMM* hmm );
+</pre><p><dl>
+<dt>obsInfoArray<dd>Array of pointers to the observation structures.
+<dt>numImg<dd>Length of the above array.
+<dt>hmm<dd>HMM.
+</dl><p>
+The function <code>cvEstimateTransProb</code> uses current segmentation of image observations
+to compute transition probability matrices for all embedded and external HMMs.
+
+</p><hr><h3><a name="decl_cvEstimateObsProb">EstimateObsProb</a></h3>
+<p class="Blurb">Computes probability of every observation of several images</p>
+<pre>
+void cvEstimateObsProb( CvImgObsInfo* obsInfo, CvEHMM* hmm );
+</pre><p><dl>
+<dt>obsInfo<dd>Observation structure.
+<dt>hmm<dd>HMM structure.
+</dl><p>
+The function <code>cvEstimateObsProb</code> computes Gaussian probabilities of each observation
+to occur in each of the internal HMM states.
+
+</p><hr><h3><a name="decl_cvEViterbi">EViterbi</a></h3>
+<p class="Blurb">Executes Viterbi algorithm for embedded HMM</p>
+<pre>
+float cvEViterbi( CvImgObsInfo* obsInfo, CvEHMM* hmm );
+</pre><p><dl>
+<dt>obsInfo<dd>Observation structure.
+<dt>hmm<dd>HMM structure.
+</dl><p>
+The function <code>cvEViterbi</code> executes Viterbi algorithm for embedded HMM. Viterbi
+algorithm evaluates the likelihood of the best match between the given image
+observations and the given HMM and performs segmentation of image observations
+by HMM states. The segmentation is done on the basis of the match found.
+
+</p><hr><h3><a name="decl_cvMixSegmL2">MixSegmL2</a></h3>
+<p class="Blurb">Segments observations from all training images by mixture components of newly
+assigned states</p>
+<pre>
+void cvMixSegmL2( CvImgObsInfo** obsInfoArray, int numImg, CvEHMM* hmm );
+</pre><p><dl>
+<dt>obsInfoArray<dd>Array of pointers to the observation structures.
+<dt>numImg<dd>Length of the array.
+<dt>hmm<dd>HMM.
+</dl><p>
+The function <code>cvMixSegmL2</code> segments observations from all training images by mixture
+components of newly Viterbi algorithm-assigned states. The function uses
+Euclidean distance to group vectors around the existing mixtures centers.
+</p>
+
+
+</body>
+</html>
+
