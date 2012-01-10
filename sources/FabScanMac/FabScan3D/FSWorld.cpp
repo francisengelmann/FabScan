@@ -161,7 +161,7 @@ void FSWorld::reshape(float width, float height) {
   gluPerspective(45.0f, (GLfloat)aspect, 0.1f, 100.0f);
     
   this->draw();
-}
+} 
 
 // ----------------------------------------
 #pragma mark -

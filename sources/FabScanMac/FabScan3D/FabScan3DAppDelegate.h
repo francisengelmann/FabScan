@@ -188,6 +188,7 @@ enum AppState
 - (IBAction)exportPCDFile: (id)sender;
 - (IBAction)exportPLYFile: (id)sender;
 - (IBAction)exportSTLFile: (id)sender;
+- (IBAction)exportSCADFile: (id)sender;
 
 - (IBAction)exportAll: (id)sender;
 

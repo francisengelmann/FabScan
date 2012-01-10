@@ -629,6 +629,24 @@
   }
 }
 
+- (IBAction)exportSCADFile: (id)sender
+{
+  NSArray *fileTypes = [NSArray arrayWithObject:@"scad"];
+  NSSavePanel *save = [NSSavePanel savePanel];
+  [save setAllowedFileTypes: fileTypes];
+  int result = [save runModal];
+  if (result == NSOKButton){
+    NSString *selectedFile = [save filename];
+    if(model->getPolygons2TrianglesTransformed() == NO)
+    {
+      surfaceMesh->convertPolygons2Triangles();
+      model->setPolygons2TrianglesTransformed(YES);
+    }
+    surfaceMesh->saveToSCADFile( [selectedFile UTF8String] );
+  }
+}
+
+
 - (IBAction)exportAll: (id)sender
 {
   //NSArray *fileTypes = [NSArray arrayWithObject:@"stl"];
@@ -669,8 +687,8 @@
 
   laser->turnOff();
   usleep(5000);
-  light->turnOn(127);
-  usleep(50000);
+  //light->turnOn(127);
+  //usleep(50000);
   laser->enable();
   usleep(5000);
   laser->setDirection(FS_DIRECTION_CCW);
@@ -713,7 +731,6 @@
         laser->turnNumberOfDegrees(laserStepSize);
         [openGLView performSelectorOnMainThread:@selector(drawFrame) withObject:nil waitUntilDone:false];
         usleep(DELAY_UNTIL_CAM_SHOT);
-        usleep(DELAY_UNTIL_CAM_SHOT);
         IplImage* laserFrame = camera->fetchFrame();
         FSVision::putPointsFromFrameToCloud(noLaserFrame,laserFrame,pointCloud,laser,camera,turntable, dpiVertical, lowerCutOffLimit, subLaserTreshold);
         cvReleaseImage(&laserFrame);
@@ -723,7 +740,6 @@
       
       turntable->turnNumberOfDegrees(stepDegrees);
       [openGLView performSelectorOnMainThread:@selector(drawFrame) withObject:nil waitUntilDone:false];
-      usleep(DELAY_UNTIL_CAM_SHOT);
       usleep(DELAY_UNTIL_CAM_SHOT);      //NSLog(@" %s 4 \n",__PRETTY_FUNCTION__);
       
       //[openGLView drawFrame];

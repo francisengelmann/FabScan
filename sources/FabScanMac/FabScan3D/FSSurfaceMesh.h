@@ -33,7 +33,8 @@ class FSSurfaceMesh : public FSObject {
     unsigned int openFromOFFFile(const char* offFilePath);
     unsigned int convertPolygons2Triangles(void);
     unsigned int saveToSTLFile(const char* stlFilePath);
-    
+    unsigned int saveToSCADFile(const char* scadFilePath);
+
     void draw();
     void clearAll();
 };

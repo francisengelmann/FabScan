@@ -8,7 +8,11 @@
 
 #include "FSVision.h"
 
-IplImage* FSVision::subLaser(IplImage *frame, IplImage *laserFrame, FSFloat treshold){
+/**
+ * 
+ * @param image with laser on, image with laser off, threshold value
+ */
+IplImage* FSVision::subLaser(IplImage *frame, IplImage *laserFrame, FSFloat threshold){
   //printf("%s \n",__PRETTY_FUNCTION__);
     
   CvSize sz = cvSize(laserFrame->width, laserFrame->height);
@@ -27,7 +31,7 @@ IplImage* FSVision::subLaser(IplImage *frame, IplImage *laserFrame, FSFloat tres
 
   cvAbsDiff(bwNoLaser,bwWithLaser,subImage);
   
-  cvThreshold(subImage,subImage,treshold,255,CV_THRESH_BINARY);
+  cvThreshold(subImage,subImage,threshold,255,CV_THRESH_BINARY);
 
   cvCvtColor(subImage, bitImage, CV_GRAY2RGB);
   
@@ -45,7 +49,7 @@ void FSVision::addGreenLineTo(IplImage *pframe)
   //cvLine(pframe, cvPoint(0,pframe->height*0.9), cvPoint(pframe->width,pframe->height*0.9), CV_RGB( 0,255,0 ),1,CV_AA,0);
   //cvLine(pframe, cvPoint(0,pframe->height*0.1), cvPoint(pframe->width,pframe->height*0.1), CV_RGB( 0,255,0 ),1,CV_AA,0);
 
-  //two lines for center of frane
+  //two lines for center of frame
   cvLine(pframe, cvPoint(pframe->width*0.5f,0), cvPoint(pframe->width*0.5,pframe->height), CV_RGB( 0,255,0 ),1,CV_AA,0);
   cvLine(pframe, cvPoint(0,pframe->height*0.5f), cvPoint(pframe->width,pframe->height*0.5f), CV_RGB( 0,255,0 ),1,CV_AA,0);
   

@@ -205,6 +205,7 @@ unsigned int FSSurfaceMesh::saveToSTLFile(const char* stlFilePath){
   ofstream stlFile;
   stlFile.open(stlFilePath,ios::out);
   stlFile << "solid 3dscan" << endl;
+  
   for(int i=0;i<faceVector.size();i++){
   
     FSPoint p1 = vertexVector[ faceVector[i][0] ];
@@ -236,18 +237,47 @@ unsigned int FSSurfaceMesh::saveToSTLFile(const char* stlFilePath){
     for(int j=0;j<faceVector[i].size();j++){
       unsigned int indice = faceVector[i][j];
       FSPoint p = vertexVector[indice];
-      stlFile << "    vertex ";
+      //axes are permuted to comply with 3d printing standart where the x-y plane is horizontal
+        stlFile << "    vertex ";
         stlFile << p.y*10 << " ";
-        stlFile << p.z*10 << " ";
-        stlFile << p.x*10 << " ";
+        stlFile << p.z*10+70 << " "; //all vertex coordinates must be positive (stl) so add radius of turntable
+        stlFile << p.x*10+70 << " ";
         stlFile << endl;
     }
     stlFile << "  endloop" << endl;
     stlFile << "endfacet" << endl;
   }
   stlFile << "endsolid test" << endl;
+  
   stlFile.close();
   return 0;
+}
+
+unsigned int FSSurfaceMesh::saveToSCADFile(const char* scadFilePath)
+{
+  cout << "writing file: " << scadFilePath << endl;
+  ofstream scadFile;
+  scadFile.open(scadFilePath,ios::out);
+  scadFile << "polyhedron(points = [" << endl;
+  
+  //first print all the points except last, since we dont want the ,
+  for(int i=0;i<vertexVector.size()-1;i++){
+    FSPoint p = vertexVector[i];
+    scadFile << "["<< p.x  << ", " << p.y << ", " << p.z << "],";
+  }
+  //print last plus triangles label
+  FSPoint p = vertexVector[vertexVector.size()-1];
+  scadFile << "["<< p.x  << ", " << p.y << ", " << p.z << "]" << endl << "], " << endl << " triangles = [" ;
+
+  for (int i=0;i<faceVector.size()-1;i++){
+    scadFile << "["<< faceVector[i][0] << ", " << faceVector[i][1] << ", " << faceVector[i][2] << "],";
+  }
+  int i = faceVector.size()-1;
+  scadFile << "["<< faceVector[i][0] << ", " << faceVector[i][1] << ", " << faceVector[i][2] << "]" << endl << "]" << endl << ");";
+  
+  scadFile.close();
+  return 0;
+
 }
 
 void FSSurfaceMesh::clearAll()
