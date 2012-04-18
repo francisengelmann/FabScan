@@ -607,7 +607,7 @@
   }
 }
 
-- (IBAction)exportPLYFile: (id)sender
+- (IBAction)exportPLYFilePC: (id)sender
 {
   NSArray *fileTypes = [NSArray arrayWithObject:@"ply"];
   NSSavePanel *save = [NSSavePanel savePanel];
@@ -616,6 +616,18 @@
   if (result == NSOKButton){
     NSString *selectedFile = [save filename];
     pointCloud->saveToPLYFile( [selectedFile UTF8String] );
+  }
+}
+
+- (IBAction)exportPLYFileSM: (id)sender
+{
+  NSArray *fileTypes = [NSArray arrayWithObject:@"ply"];
+  NSSavePanel *save = [NSSavePanel savePanel];
+  [save setAllowedFileTypes: fileTypes];
+  int result = [save runModal];
+  if (result == NSOKButton){
+    NSString *selectedFile = [save filename];
+    surfaceMesh->saveToPLYFile( [selectedFile UTF8String] );
   }
 }
 
@@ -673,7 +685,7 @@
     surfaceMesh->saveToSTLFile([[selectedFile stringByAppendingString: @".stl"] UTF8String] );
     pointCloud->saveToPCDFile( [[selectedFile stringByAppendingString: @".pcd"] UTF8String] );
     pointCloud->saveToPTSFile( [[selectedFile stringByAppendingString: @".pts"] UTF8String] );
-    pointCloud->saveToPLYFile( [[selectedFile stringByAppendingString: @".ply"] UTF8String] );
+    surfaceMesh->saveToPLYFile( [[selectedFile stringByAppendingString: @".ply"] UTF8String] );
   }
 }
 

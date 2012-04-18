@@ -253,6 +253,47 @@ unsigned int FSSurfaceMesh::saveToSTLFile(const char* stlFilePath){
   return 0;
 }
 
+unsigned int FSSurfaceMesh::saveToPLYFile(const char* plyFilePath)
+{
+  ofstream plyFile;
+  string plyFilename;
+  plyFilename.assign(plyFilePath);
+  //plyFilename.append("_.ply"); 
+  plyFile.open(plyFilename.c_str());
+  
+  plyFile << "ply\n";
+  plyFile << "format ascii 1.0\n";
+  plyFile << "element vertex " << vertexVector.size() << "\n";;
+  plyFile << "property float x\n";
+  plyFile << "property float y\n";
+  plyFile << "property float z\n";
+  plyFile << "property uchar diffuse_red\n";
+  plyFile << "property uchar diffuse_green\n";
+  plyFile << "property uchar diffuse_blue\n"; 
+  plyFile << "element face "<< faceVector.size() <<"\n";
+  plyFile << "property list uchar int vertex_indices\n";
+  plyFile << "end_header\n";
+
+  for (int i=0; i<vertexVector.size(); i++){
+    FSPoint p =  vertexVector[i];
+    plyFile << p.x << " " << p.y << " " << p.z <<  " "
+    << (int)p.color.red <<  " " << (int)p.color.green <<  " " << (int)p.color.blue << endl;
+  }
+
+  for (int i=0; i<faceVector.size(); i++){
+    vector <unsigned int> face = faceVector[i];
+    
+    plyFile << face.size();
+    for(int j=0;j<face.size();j++){
+      plyFile << " " << face[j];
+    }
+    plyFile << endl;
+  }
+  
+  plyFile.close();
+  return 0;
+}
+
 unsigned int FSSurfaceMesh::saveToSCADFile(const char* scadFilePath)
 {
   cout << "writing file: " << scadFilePath << endl;

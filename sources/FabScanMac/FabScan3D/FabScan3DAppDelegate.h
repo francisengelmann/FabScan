@@ -187,7 +187,8 @@ enum AppState
 
 - (IBAction)exportPTSFile: (id)sender;
 - (IBAction)exportPCDFile: (id)sender;
-- (IBAction)exportPLYFile: (id)sender;
+- (IBAction)exportPLYFilePC: (id)sender;  //Point Cloud
+- (IBAction)exportPLYFileSM: (id)sender;  //Surface Mesh
 - (IBAction)exportSTLFile: (id)sender;
 - (IBAction)exportSCADFile: (id)sender;
 

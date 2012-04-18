@@ -36,6 +36,7 @@ class FSPointCloud : public FSObject {
     unsigned char saveToPCDFile(const char* fileName);
     unsigned char saveToPTSFile(const char* fileName);
     unsigned char saveToPLYFile(const char* fileName);
+    unsigned char saveToPLYMeshFile(const char* fileName);
     
     unsigned char openFromPCDFile(const char* filename);
 
