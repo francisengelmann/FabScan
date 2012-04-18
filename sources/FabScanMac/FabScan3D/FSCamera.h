@@ -21,6 +21,7 @@ class FSCamera : public FSObject {
     const char* resPath;
 
   public:
+    /* resPath : path to distortion/intrinisics params */
     FSCamera(const char* resPath);
     ~FSCamera();
   

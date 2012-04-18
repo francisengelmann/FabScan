@@ -15,6 +15,6 @@ int main ( int argc, char **argv )
   IplImage* pframe = cvQueryFrame(capture);
   cvShowImage("Cam Shot", pframe);
   cvWaitKey();
-  //cvSaveImage("camShot.png",pframe);
+  cvSaveImage("camShot.png",pframe);
   return 0;
 }

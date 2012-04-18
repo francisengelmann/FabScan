@@ -62,6 +62,8 @@
     subLaserTreshold = 70;
     lowerCutOffLimit = 0.2f;
     
+    currCameraPortCount = 0;
+    
     currSerialPortCount = 0;
     currSerialPortPath = @"";
     
@@ -380,6 +382,11 @@
   laser->setRotation(FSMakePoint(0.0f, 0.0f, 0.0f));
 }
 
+- (IBAction)autoLaserResetAction: (id)sender
+{
+  NSLog(@"auto Laser Reset");
+  [self autoLaserReset];
+}
 
 /* Misc Controls */
 
@@ -676,8 +683,12 @@
 // ---------------------------------------------
 
 
-//runs in a thread
+//runs in a thread, gets executed when button is pressed ,running in thread not to block application
 - (IBAction)analyseFrame:(id)sender {
+
+  laser->enable();
+  [self autoLaserReset];
+
   FSFloat stepDegrees = dpiHorizontal/200.0f/16.0f*360.0f;
 ;
   NSAutoreleasePool *innerPool = [[NSAutoreleasePool alloc] init];
@@ -693,6 +704,9 @@
   usleep(5000);
   laser->setDirection(FS_DIRECTION_CCW);
   usleep(5000);
+  
+  
+  //turn the laser line onto the object to the "SCANNING ANGLE"
   FSPoint rot = laser->getRotation();
   laser->turnNumberOfDegrees(SCANNING_ANGLE-rot.y+(laserSteps-1)*laserStepSize/2);
   usleep(2000000); //wait a little linge since the laser needs time to turn into position
@@ -807,24 +821,110 @@
   [openGLView drawFrame];
 }
 
+- (void)autoLaserReset
+{
+  //get images from camera
+  laser->turnOff();
+  usleep(DELAY_UNTIL_CAM_SHOT);
+  usleep(DELAY_UNTIL_CAM_SHOT);
+  IplImage* noLaserFrame = camera->fetchFrame();
+  
+  //frame->setFrame(cvCloneImage(noLaserFrame));
+  //[openGLView drawFrame];
+  
+  laser->turnOn();
+  usleep(DELAY_UNTIL_CAM_SHOT);
+  usleep(DELAY_UNTIL_CAM_SHOT);
+  IplImage* laserFrame = camera->fetchFrame();
+  //frame->setFrame(cvCloneImage(laserFrame));
+  //[openGLView drawFrame];
+  usleep(DELAY_UNTIL_CAM_SHOT);
+  usleep(DELAY_UNTIL_CAM_SHOT);  
+  //calculate new images
+  
+  CvSize sz = cvSize(laserFrame->width, laserFrame->height);
+
+  IplImage *bwNoLaser = cvCreateImage(sz, IPL_DEPTH_8U, 1);
+	IplImage *bwWithLaser = cvCreateImage(sz, IPL_DEPTH_8U, 1);
+	IplImage *subImage = cvCreateImage(sz, IPL_DEPTH_8U, 1);
+	IplImage *bitImage = cvCreateImage(sz, IPL_DEPTH_8U, 3);
+  
+  // the cvCvtColor function segfaults on windows.  Not sure why.
+	cvCvtColor(noLaserFrame, bwNoLaser,CV_RGB2GRAY);
+	cvCvtColor(laserFrame, bwWithLaser,CV_RGB2GRAY);
+  
+  //cvSub(bwWithLaser, bwNoLaser, subImage);  
+  //cvCvtColor(subImage, pframe,CV_GRAY2RGB);
+
+
+  cvAbsDiff(bwNoLaser,bwWithLaser,subImage);
+  //cvThreshold(subImage, subImage, TRESHOLD_FOR_BW, 255, CV_THRESH_BINARY);
+    
+  //secend last param is the size of the block that is used to determine treshhold
+  cvAdaptiveThreshold(subImage,subImage,255,CV_ADAPTIVE_THRESH_MEAN_C,CV_THRESH_BINARY,501,0);
+  cvSmooth( subImage, subImage, CV_GAUSSIAN, 11, 11 );
+  cvSmooth( subImage, subImage, CV_GAUSSIAN, 11, 11 );
+  cvThreshold(subImage, subImage, 200, 255, CV_THRESH_BINARY);
+  
+  //cvErode(subImage,subImage,NULL,3);
+  //cvDilate(subImage,subImage,NULL,3);
+  //cvErode(subImage,subImage,NULL,3);
+  //cvDilate(subImage,subImage,NULL,3);
+    
+  //cvThreshold(subImage,subImage,threshold,255,CV_THRESH_BINARY);
+
+  CvMemStorage* storage = cvCreateMemStorage(0);
+  CvSeq* lines = cvHoughLines2(subImage, storage, CV_HOUGH_PROBABILISTIC, 1, CV_PI/180, 200, 50, 10);
+  
+  cvCvtColor(subImage, bitImage, CV_GRAY2RGB);
+
+  //for(int i = 0; i < lines->total; i++) {
+  for(int i = 0; i < 1; i++) {
+    CvPoint* line = (CvPoint*)cvGetSeqElem(lines,i);
+    cvLine( bitImage, line[0], line[1], CV_RGB(255,255,0), 3, CV_AA, 0);
+  }
+  
+  CvPoint* line = (CvPoint*)cvGetSeqElem(lines,0);
+  FSPoint p = FSVision::convertCvPointToFSPoint(line[1]);
+
+  FSFloat a = LASER_POS_X - p.x;
+  FSFloat b = LASER_POS_Z;
+  FSFloat alpha = atan(a/b);
+  NSLog(@"angle=%f",alpha*180.0/CV_PI);
+  
+  laser->setRotation(FSMakePoint(0.0f, alpha*180.0/CV_PI, 0.0f));
+
+  //frame->setFrame(bitImage);
+  //[openGLView drawFrame];
+  
+  //for(int x=0; x<laserLine  Frame.width; x++){
+  //  int y = CAM_IMAGE_HEIGHT*
+  //}
+}
+
 - (void)doGuessedSetup
 {
-  laser->setPosition( FSMakePoint(LASER_POS_X,LASER_POS_Y,LASER_POS_Z) ); //28.5
-  FSPoint camPos = FSMakePoint(CAM_POS_X, CAM_POS_Y, CAM_POS_Z); //26.37
-  FSPoint camRot = FSMakePoint(0.0f, 0.0f, 0.0f); //-1.5
+  laser->setPosition( FSMakePoint(LASER_POS_X,LASER_POS_Y,LASER_POS_Z) );
+  FSPoint camPos = FSMakePoint(CAM_POS_X, CAM_POS_Y, CAM_POS_Z);
+  FSPoint camRot = FSMakePoint(0.0f, 0.0f, 0.0f);
   camera->setPosition(camPos);
   camera->setRotation(camRot);
   
-  FSSize imgSize = FSMakeSize(FRAME_WIDTH, FRAME_WIDTH*(3.0f/4.0f), 0.0f);
+  FSSize imgSize = FSMakeSize(FRAME_WIDTH, FRAME_WIDTH*(CAM_IMAGE_HEIGHT/CAM_IMAGE_WIDTH), 0.0f);
+  NSLog(@"FRAME_WIDTH %f",FRAME_WIDTH);
+  NSLog(@"FRAME_HEIGHT %f",FRAME_WIDTH*(CAM_IMAGE_HEIGHT/CAM_IMAGE_WIDTH));
   frame->setSize(imgSize);
   FSPoint imgPos;
   imgPos.x = -imgSize.width/2.0f;
   float angle = camRot.x*((float)M_PI/180.0f);
   printf("%s cam angle %f %f\n",__PRETTY_FUNCTION__, angle, tan(angle));
-  imgPos.y = camPos.y - imgSize.height/2.0f + (float)tan(angle)*camPos.z;
+  //imgPos.y = camPos.y - imgSize.height/2.0f + (float)tan(angle)*camPos.z;
+  imgPos.y = camPos.y - imgSize.height/2.0f;
+  printf("in do GuessedSetup: imgSize.heigh=%f \n",imgSize.height);
   imgPos.z = 0.0f;
   frame->setPosition(imgPos);
   //frame->setPosition(FSMakePoint(-15.5f,-8.3f,0.0f));
+  
 }
 
 - (void)adaptToState
@@ -990,6 +1090,10 @@
 - (void) refreshCameraList
 {
   NSArray* camArray = [QTCaptureDevice inputDevicesWithMediaType: QTMediaTypeVideo];
+  //if(currCameraPortCount == [camArray count]) return;
+  NSLog(@"updating");
+  currCameraPortCount = [camArray count];
+  
   //NSLog(@"cam count %d",[camArray count]);
   
   [cameraMenu removeAllItems];
@@ -1005,10 +1109,10 @@
      }else{
       //NSLog(@"%d is not nil",i);
      }
-
-  
+    
     NSMenuItem* newItem = [[NSMenuItem allocWithZone:[NSMenu menuZone]]
-                                              initWithTitle: @"cam"
+                                              //initWithTitle: @"cam"
+                                              initWithTitle: [cam localizedDisplayName]
                                               action: @selector (cameraSelected:)
                                               keyEquivalent: @""];
     [newItem setTag: i];

@@ -18,6 +18,7 @@
 		152E45CA13D4A61700C57148 /* FSPointCloud.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 152E45C813D4A61600C57148 /* FSPointCloud.cpp */; };
 		1532B3CF13D1B7CB00636817 /* FSChessboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1532B3CD13D1B7CB00636817 /* FSChessboard.cpp */; };
 		1532B3ED13D30AB900636817 /* FSBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1532B3EB13D30AB900636817 /* FSBox.cpp */; };
+		15344338153207E9005C5B88 /* FSCamera2.mm in Sources */ = {isa = PBXBuildFile; fileRef = 15344337153207E9005C5B88 /* FSCamera2.mm */; };
 		153554FA13D0CF8F00D38A63 /* OpenCV.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 153554F913D0CF8F00D38A63 /* OpenCV.framework */; };
 		153554FE13D0D18F00D38A63 /* OpenCV.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 153554FD13D0D18F00D38A63 /* OpenCV.framework */; };
 		1579D06D13BF99D3001AB01A /* FSObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1579D06B13BF99D3001AB01A /* FSObject.cpp */; };
@@ -97,6 +98,8 @@
 		1532B3CE13D1B7CB00636817 /* FSChessboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSChessboard.h; sourceTree = "<group>"; };
 		1532B3EB13D30AB900636817 /* FSBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FSBox.cpp; sourceTree = "<group>"; };
 		1532B3EC13D30AB900636817 /* FSBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSBox.h; sourceTree = "<group>"; };
+		15344336153207E9005C5B88 /* FSCamera2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCamera2.h; sourceTree = "<group>"; };
+		15344337153207E9005C5B88 /* FSCamera2.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FSCamera2.mm; sourceTree = "<group>"; };
 		153554F913D0CF8F00D38A63 /* OpenCV.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OpenCV.framework; sourceTree = "<group>"; };
 		153554FD13D0D18F00D38A63 /* OpenCV.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OpenCV.framework; sourceTree = "<group>"; };
 		1579D06B13BF99D3001AB01A /* FSObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FSObject.cpp; sourceTree = "<group>"; };
@@ -269,6 +272,8 @@
 				15D7B02313BF428F00BD469E /* FSCamera.cpp */,
 				15FFC4F013BE130400063072 /* FSLaser.h */,
 				15FFC4EF13BE130400063072 /* FSLaser.cpp */,
+				15344336153207E9005C5B88 /* FSCamera2.h */,
+				15344337153207E9005C5B88 /* FSCamera2.mm */,
 			);
 			name = Hardware;
 			sourceTree = "<group>";
@@ -467,6 +472,7 @@
 				152AF783141A190400F4BB3F /* FSLight.cpp in Sources */,
 				15EC1876141D679400C69ED6 /* FSSurfaceMesh.cpp in Sources */,
 				15EC187A141D681500C69ED6 /* FSModel.cpp in Sources */,
+				15344338153207E9005C5B88 /* FSCamera2.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -549,7 +555,7 @@
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				INFOPLIST_FILE = "FabScan3D/FabScan-Info.plist";
 				PRODUCT_NAME = FabScan;
-				SDKROOT = "";
+				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -571,7 +577,7 @@
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				INFOPLIST_FILE = "FabScan3D/FabScan-Info.plist";
 				PRODUCT_NAME = FabScan;
-				SDKROOT = "";
+				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

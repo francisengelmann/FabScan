@@ -56,6 +56,8 @@ static FSPoint FSMakePoint(FSFloat x, FSFloat y, FSFloat z)
     return p;
 }
 
+//typedef std::Vec<int, 4> Vec4i;
+ 
 // ----------------------------------------
 #pragma mark -
 #pragma mark FSLine2

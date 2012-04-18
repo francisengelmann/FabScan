@@ -25,6 +25,7 @@ FSFrame::FSFrame()
 FSFrame::FSFrame(FSPoint p)
 {
   frame=NULL;
+  //size will be reset
   size = FSMakeSize(FRAME_WIDTH, FRAME_WIDTH, 0.0f);
   position = p;
 }

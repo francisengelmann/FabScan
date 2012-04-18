@@ -102,6 +102,7 @@ enum AppState
   FSFloat lowerCutOffLimit;
   
   AppState state;
+  unsigned char currCameraPortCount; //the number of connected cameras, used to decide wether the list should get updated or not
 }
 
 @property (assign) IBOutlet NSWindow *window;
@@ -191,6 +192,8 @@ enum AppState
 - (IBAction)exportSCADFile: (id)sender;
 
 - (IBAction)exportAll: (id)sender;
+
+- (IBAction)autoLaserResetAction: (id)sender;
 
 
 /* Other */

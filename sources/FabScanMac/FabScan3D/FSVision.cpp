@@ -11,6 +11,7 @@
 /**
  * 
  * @param image with laser on, image with laser off, threshold value
+ * @return RGB IplImage of binary result 
  */
 IplImage* FSVision::subLaser(IplImage *frame, IplImage *laserFrame, FSFloat threshold){
   //printf("%s \n",__PRETTY_FUNCTION__);
@@ -22,7 +23,7 @@ IplImage* FSVision::subLaser(IplImage *frame, IplImage *laserFrame, FSFloat thre
 	IplImage *subImage = cvCreateImage(sz, IPL_DEPTH_8U, 1);
 	IplImage *bitImage = cvCreateImage(sz, IPL_DEPTH_8U, 3);
   
-  	// the cvCvtColor function segfaults on windows.  Not sure why.
+  // the cvCvtColor function segfaults on windows.  Not sure why.
 	cvCvtColor(frame, bwNoLaser,CV_RGB2GRAY);
 	cvCvtColor(laserFrame, bwWithLaser,CV_RGB2GRAY);
   
@@ -30,8 +31,7 @@ IplImage* FSVision::subLaser(IplImage *frame, IplImage *laserFrame, FSFloat thre
   //cvCvtColor(subImage, pframe,CV_GRAY2RGB);
 
   cvAbsDiff(bwNoLaser,bwWithLaser,subImage);
-  
-  cvThreshold(subImage,subImage,threshold,255,CV_THRESH_BINARY);
+  cvThreshold(subImage, subImage, TRESHOLD_FOR_BW, 255, CV_THRESH_BINARY);
 
   cvCvtColor(subImage, bitImage, CV_GRAY2RGB);
   
@@ -68,8 +68,8 @@ void FSVision::addGreenLineTo(IplImage *pframe)
 
 FSPoint FSVision::convertCvPointToFSPoint(CvPoint cvPoint)
 {
-  CvSize cvImageSize = cvSize(1600, 1200); //1600 1200 is the resolution of the image from the camera
-  FSSize fsImageSize = FSMakeSize(FRAME_WIDTH, FRAME_WIDTH*(3.0f/4.0f), 0.0f);
+  CvSize cvImageSize = cvSize(CAM_IMAGE_WIDTH, CAM_IMAGE_HEIGHT); //1600 1200 is the resolution of the image from the camera
+  FSSize fsImageSize = FSMakeSize(FRAME_WIDTH, FRAME_WIDTH*(CAM_IMAGE_HEIGHT/CAM_IMAGE_WIDTH), 0.0f);
   
   //here we define the origin of the cvImage, we place it in the middle of the frame and in the corner of the two perpendiculair planes
   CvPoint origin;
@@ -91,8 +91,8 @@ FSPoint FSVision::convertCvPointToFSPoint(CvPoint cvPoint)
 
 CvPoint FSVision::convertFSPointToCvPoint(FSPoint fsPoint)
 {
-  CvSize cvImageSize = cvSize(1600, 1200);
-  FSSize fsImageSize = FSMakeSize(FRAME_WIDTH, FRAME_WIDTH*(3.0f/4.0f), 0.0f);
+  CvSize cvImageSize = cvSize(CAM_IMAGE_WIDTH, CAM_IMAGE_HEIGHT);
+  FSSize fsImageSize = FSMakeSize(FRAME_WIDTH, FRAME_WIDTH*(CAM_IMAGE_HEIGHT/CAM_IMAGE_WIDTH), 0.0f);
   CvPoint origin;
   origin.x = cvImageSize.width/2.0f;
   origin.y = cvImageSize.height*ORIGIN_Y;

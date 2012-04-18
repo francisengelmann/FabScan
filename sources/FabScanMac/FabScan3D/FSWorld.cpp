@@ -290,5 +290,3 @@ void FSWorld::drawChessboard(){
     }
   }
 }
-
-

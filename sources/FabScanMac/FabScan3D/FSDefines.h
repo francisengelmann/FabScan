@@ -11,10 +11,19 @@
 #define LASER_OFFSET_ANGLE 0.0f
 #define DELAY_UNTIL_CAM_SHOT 500000
 
+// CAMERA DEFINES //
 
 //33.2cm is the width of what the camera sees, ie place a measure tool at the back-plane and see how many cm the camera sees.
-//#define FRAME_WIDTH 32.3f //32.3
-#define FRAME_WIDTH 32.3f //32.3
+
+//logitech quickcam pro 9000
+//#define FRAME_WIDTH 32.3f
+//#define CAM_IMAGE_WIDTH 1600
+//#define CAM_IMAGE_HEIGHT 1200
+
+//logitech c920
+#define FRAME_WIDTH 35.0f 
+#define CAM_IMAGE_WIDTH 1920.0f
+#define CAM_IMAGE_HEIGHT 1080.0f
 
 //#define DPI_HORIZONTAL 10.0f
 //#define DPI_VERTICAL 2.0f
@@ -66,7 +75,9 @@
 
 //defining the origin in the cvFrame
 //the position of intersection of back plane with ground plane in cvFrame in procent
-#define ORIGIN_Y 0.725
+//check the yellow laser line to calibrate, the yellow laser line should touch the bottom plane
+//#define ORIGIN_Y 0.725
+#define ORIGIN_Y 0.825
 
 //the angle used to scan, obsolete when the laser is also moving
 #define SCANNING_ANGLE 33.69f//33.69f
@@ -85,11 +96,13 @@
 */
 ////position of laser and cam
 #define LASER_POS_X 14.0f //precise by construction
-#define LASER_POS_Y 5.4f  //not needed for calculations
+#define LASER_POS_Y 6.4f  //not needed for calculations
 #define LASER_POS_Z 28.5f //precise by construction
 
-#define CAM_POS_X -0.7f
-#define CAM_POS_Y 5.3f
+//#define CAM_POS_X -0.7f
+#define CAM_POS_X 0.0f
+//#define CAM_POS_Y 5.3f //quickcam 9000
+#define CAM_POS_Y 6.3f //c920
 #define CAM_POS_Z 27.0f
 
 //how big is the step the laser moves when pressing the buton in the ctrl window
