@@ -239,9 +239,12 @@ unsigned int FSSurfaceMesh::saveToSTLFile(const char* stlFilePath){
       FSPoint p = vertexVector[indice];
       //axes are permuted to comply with 3d printing standart where the x-y plane is horizontal
         stlFile << "    vertex ";
-        stlFile << p.y*10 << " ";
-        stlFile << p.z*10+70 << " "; //all vertex coordinates must be positive (stl) so add radius of turntable
-        stlFile << p.x*10+70 << " ";
+        //stlFile << p.y*10 << " ";
+        //stlFile << p.z*10+70 << " "; //all vertex coordinates must be positive (stl) so add radius of turntable
+        //stlFile << p.x*10+70 << " ";
+        stlFile << p.x << " ";
+        stlFile << p.y << " "; //all vertex coordinates must be positive (stl) so add radius of turntable
+        stlFile << p.z << " ";
         stlFile << endl;
     }
     stlFile << "  endloop" << endl;

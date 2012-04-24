@@ -188,7 +188,7 @@ void FSVision::putPointsFromFrameToCloud(IplImage* noLaserFrame, IplImage* laser
           
           //turning new point according to current angle of turntable
           //translate coordinate system to the middle of the turntable
-          fsNewPoint.z -= 7.5f; //7cm radius of turntbale plus 5mm offset from back plane
+          fsNewPoint.z -= TURNTABLE_POS_Z; //7cm radius of turntbale plus 5mm offset from back plane
           FSPoint alphaDelta = turntable->getRotation();
           //printf("%s %f \n", __PRETTY_FUNCTION__, alphaDelta.y);
           FSFloat alphaOld = (float)atan(fsNewPoint.z/fsNewPoint.x);

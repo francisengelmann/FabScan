@@ -94,16 +94,37 @@
 #define CAM_POS_Y 5.06f
 #define CAM_POS_Z 24.2f
 */
-////position of laser and cam
+
+/* The axes of the orthogonal coordinate system are defined as follows:
+  x-axe:  along the intersection of the middle plane and the back plane
+          pointing to the right
+  y-axe:  perpendiculare to the x-axe contained in the back plane
+          pointing to the top
+  z-axe:  perpendiculare to the x-axe contained in the middle plane, crossing the middle of the turntable
+          pointing to the front
+          
+  The origin is the intersection of the three axes.
+*/
+
+//position of laser module
 #define LASER_POS_X 14.0f //precise by construction
-#define LASER_POS_Y 6.4f  //not needed for calculations
+#define LASER_POS_Y 6.4f  //not needed/used for calculations
 #define LASER_POS_Z 28.5f //precise by construction
 
+//position of the quickcam 9000
 //#define CAM_POS_X -0.7f
+//#define CAM_POS_Y 5.3f //
+//#define CAM_POS_Z 27.0f
+
+//position of the //c920 (these values are not exactly precise and should be determined by this software using algos like Eight-point algorithm)
 #define CAM_POS_X 0.0f
-//#define CAM_POS_Y 5.3f //quickcam 9000
-#define CAM_POS_Y 6.3f //c920
+#define CAM_POS_Y 6.3f 
 #define CAM_POS_Z 27.0f
 
-//how big is the step the laser moves when pressing the buton in the ctrl window
+//position of the turntable
+#define TURNTABLE_POS_X 0.0f //not used by calculations
+#define TURNTABLE_POS_Y 0.0f //not used by calculations
+#define TURNTABLE_POS_Z 7.5f //precise by construction
+
+//how big is the step the laser moves when pressing the button in the ctrl window
 #define LASER_STEP 33.69f
