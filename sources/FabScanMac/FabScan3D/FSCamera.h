@@ -19,6 +19,10 @@ class FSCamera : public FSObject {
     CvMat *intrinsic; 
     CvMat *distortion;
     const char* resPath;
+    
+    FSPoint position;       //the position of the camera in cm
+    FSSize imageResolution; //the resolution of the image given by the camera
+    FSFloat sceneWidth;     //the real width of what the camera sees in cm
 
   public:
     /* resPath : path to distortion/intrinisics params */
@@ -29,6 +33,15 @@ class FSCamera : public FSObject {
     CvMat* getIntrinsic(void);
     void setDistortion(CvMat* distortion);
     CvMat* getDistortion(void);
+    
+    FSPoint getPosition(void);
+    void setPosition(FSPoint p);
+    
+    FSSize getImageResolution(void);
+    void setImageResolution(FSSize r);
+    
+    FSFloat getSceneWidth(void);
+    void setSceneWidth(FSFloat w);
     
     IplImage* fetchFrame(void);
     IplImage* fetchQuickFrame(void);

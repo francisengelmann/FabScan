@@ -100,6 +100,16 @@ static FSSize FSMakeSize(FSFloat width, FSFloat height, FSFloat depth)
 
 // ----------------------------------------
 #pragma mark -
+#pragma mark camera
+// ----------------------------------------
+
+typedef struct _FSCamera
+{
+  
+};
+
+// ----------------------------------------
+#pragma mark -
 #pragma mark Handy functions
 // ----------------------------------------
 

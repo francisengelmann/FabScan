@@ -142,11 +142,11 @@
 - (void)continuousCheckForHardware
 {
   NSAutoreleasePool *innerPool = [[NSAutoreleasePool alloc] init];
+  [self refreshCameraList];
   while(YES){
     sleep(1);
    // NSLog(@"%s",__PRETTY_FUNCTION__);
     [self refreshSerialList];
-    [self refreshCameraList];
     //[NSTimer scheduledTimerWithTimeInterval: 1.0
     //target:self
     //selector:@selector(continuousCheckForHardware)
@@ -699,7 +699,7 @@
 - (IBAction)analyseFrame:(id)sender {
 
   laser->enable();
-  [self autoLaserReset];
+//  [self autoLaserReset];
 
   FSFloat stepDegrees = dpiHorizontal/200.0f/16.0f*360.0f;
 ;
@@ -720,7 +720,7 @@
   
   //turn the laser line onto the object to the "SCANNING ANGLE"
   FSPoint rot = laser->getRotation();
-  laser->turnNumberOfDegrees(SCANNING_ANGLE-rot.y+(laserSteps-1)*laserStepSize/2);
+  //laser->turnNumberOfDegrees(SCANNING_ANGLE-rot.y+(laserSteps-1)*laserStepSize/2);
   usleep(2000000); //wait a little linge since the laser needs time to turn into position
   
   turntable->setDirection(FS_DIRECTION_CCW);
@@ -754,7 +754,7 @@
       //here are the others
       for(int t=1; t<laserSteps && state==AppStateStartScanning; t++){
         printf("t: %d laserSteps: %d \n",t,laserSteps);
-        laser->turnNumberOfDegrees(laserStepSize);
+        //laser->turnNumberOfDegrees(laserStepSize);
         [openGLView performSelectorOnMainThread:@selector(drawFrame) withObject:nil waitUntilDone:false];
         usleep(DELAY_UNTIL_CAM_SHOT);
         IplImage* laserFrame = camera->fetchFrame();
@@ -816,7 +816,7 @@
 //  [self adaptToState];
   [self performSelectorOnMainThread:@selector(adaptToState) withObject:nil waitUntilDone:true];
 
-  laser->turnToInitPosition();
+  //laser->turnToInitPosition();
 
   //camera->setTarget(FSMakePoint(0.0f, <#FSFloat y#>, 7.3f));
   
@@ -905,6 +905,7 @@
   NSLog(@"angle=%f",alpha*180.0/CV_PI);
   
   laser->setRotation(FSMakePoint(0.0f, alpha*180.0/CV_PI, 0.0f));
+  laser->setLaserPointPosition(p);
 
   //frame->setFrame(bitImage);
   //[openGLView drawFrame];
@@ -912,6 +913,8 @@
   //for(int x=0; x<laserLine  Frame.width; x++){
   //  int y = CAM_IMAGE_HEIGHT*
   //}
+  
+  [self fetchFrame: self];
 }
 
 - (void)doGuessedSetup
@@ -1110,7 +1113,6 @@
   
   [cameraMenu removeAllItems];
   NSInteger i = 0;
-
   
   for (QTCaptureDevice* cam in camArray) {
     //NSString* camName;
@@ -1136,14 +1138,60 @@
       [newItem setState: NSOnState];
     }
 
-    [cameraMenu addItem: newItem];	
+    //[cameraMenu addItem: newItem];	
   }
+  
+  //here we add the camea types, a little strange but ok
+  NSMenuItem* cam1 = [[NSMenuItem allocWithZone:[NSMenu menuZone]]
+                                              //initWithTitle: @"cam"
+                                              initWithTitle: @"Logitech Quickcam 9000"
+                                              action: @selector (cameraSelected:)
+                                              keyEquivalent: @""];
+  NSMenuItem* cam2 = [[NSMenuItem allocWithZone:[NSMenu menuZone]]
+                                              //initWithTitle: @"cam"
+                                              initWithTitle: @"Logitech c920"
+                                              action: @selector (cameraSelected:)
+                                              keyEquivalent: @""]; 
+  NSMenuItem* cam3 = [[NSMenuItem allocWithZone:[NSMenu menuZone]]
+                                              //initWithTitle: @"cam"
+                                              initWithTitle: @"Logitech c270"
+                                              action: @selector (cameraSelected:)
+                                              keyEquivalent: @""];
+  [cam1 setTag: 1];
+  [cam2 setTag: 2];
+  [cam3 setTag: 3];
+  
+  [cameraMenu addItem: [NSMenuItem separatorItem]];
+  [cameraMenu addItem: cam1];
+  [cameraMenu addItem: cam2];
+  [cameraMenu addItem: cam3];
+  
 }
 
 - (IBAction)cameraSelected:(id)sender
 {
   QTCaptureDevice* cam = [[QTCaptureDevice inputDevicesWithMediaType: QTMediaTypeVideo] objectAtIndex: [sender tag]];
   [cam open: nil]; //nil cos we dont care about errors :P
+}
+
+- (IBAction)selectCameraType: (id)sender
+{
+  switch([sender tag]){
+    case 1: //logitech quickcam9000
+      //camera->setSceneWidth(32.3f);
+      //camera->setPosition(FSMakeSize());
+      NSLog(@"1");
+      break;
+    case 2: //logitech c270
+      NSLog(@"2");
+      //camera->setSceneWidth(35.0f);
+      break;
+    case 3:
+      NSLog(@"3");
+      break;
+    default:
+      break;
+  }
 }
 
 @end

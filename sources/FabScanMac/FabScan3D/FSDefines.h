@@ -11,20 +11,6 @@
 #define LASER_OFFSET_ANGLE 0.0f
 #define DELAY_UNTIL_CAM_SHOT 500000
 
-// CAMERA DEFINES //
-
-//33.2cm is the width of what the camera sees, ie place a measure tool at the back-plane and see how many cm the camera sees.
-
-//logitech quickcam pro 9000
-//#define FRAME_WIDTH 32.3f
-//#define CAM_IMAGE_WIDTH 1600
-//#define CAM_IMAGE_HEIGHT 1200
-
-//logitech c920
-#define FRAME_WIDTH 35.0f 
-#define CAM_IMAGE_WIDTH 1920.0f
-#define CAM_IMAGE_HEIGHT 1080.0f
-
 //#define DPI_HORIZONTAL 10.0f
 //#define DPI_VERTICAL 2.0f
 
@@ -95,6 +81,26 @@
 #define CAM_POS_Z 24.2f
 */
 
+// CAMERA DEFINES //
+
+//33.2cm is the width of what the camera sees, ie place a measure tool at the back-plane and see how many cm the camera sees.
+
+//logitech quickcam pro 9000
+//#define FRAME_WIDTH 32.3f
+//#define CAM_IMAGE_WIDTH 1600
+//#define CAM_IMAGE_HEIGHT 1200
+
+//logitech c920
+//#define FRAME_WIDTH 35.0f 
+//#define CAM_IMAGE_WIDTH 1920.0f
+//#define CAM_IMAGE_HEIGHT 1080.0f
+
+//logitech c270
+#define FRAME_WIDTH 26.6f 
+#define CAM_IMAGE_WIDTH 1280.0f
+#define CAM_IMAGE_HEIGHT 853.0f
+
+
 /* The axes of the orthogonal coordinate system are defined as follows:
   x-axe:  along the intersection of the middle plane and the back plane
           pointing to the right
@@ -116,10 +122,16 @@
 //#define CAM_POS_Y 5.3f //
 //#define CAM_POS_Z 27.0f
 
-//position of the //c920 (these values are not exactly precise and should be determined by this software using algos like Eight-point algorithm)
+//position of the c270
 #define CAM_POS_X 0.0f
-#define CAM_POS_Y 6.3f 
-#define CAM_POS_Z 27.0f
+#define CAM_POS_Y 5.1257f //precise by construction 
+#define CAM_POS_Y 4.07f //precise by construction 
+#define CAM_POS_Z 30.7f
+
+//position of the //c920 (these values are not exactly precise and should be determined by this software using algos like Eight-point algorithm)
+//#define CAM_POS_X 0.0f
+//#define CAM_POS_Y 6.3f 
+//#define CAM_POS_Z 27.0f
 
 //position of the turntable
 #define TURNTABLE_POS_X 0.0f //not used by calculations
@@ -127,4 +139,5 @@
 #define TURNTABLE_POS_Z 7.5f //precise by construction
 
 //how big is the step the laser moves when pressing the button in the ctrl window
-#define LASER_STEP 33.69f
+//#define LASER_STEP 33.69f
+#define LASER_STEP 34.69f

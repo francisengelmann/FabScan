@@ -35,7 +35,7 @@ void FSTurnTable::turnNumberOfDegrees(FSFloat degrees)
   degrees = steps/200.0f/16.0f*360.0f;
   if(direction==FS_DIRECTION_CCW){
     rotation.y += degrees;
-  }else if(direction==FS_DIRECTION_CCW){
+  }else if(direction==FS_DIRECTION_CW){
     rotation.y -= degrees;
   }
   stepper->turnNumberOfDegrees(degrees);

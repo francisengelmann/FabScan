@@ -123,6 +123,16 @@ IplImage* FSCamera::setPositionUsingChessboardCalibration(FSChessboardCalibratio
   return blub;
 }
 
+void FSCamera::setPosition(FSPoint p)
+{
+  position = p;
+}
+
+FSPoint FSCamera::getPosition(void)
+{
+  return position;
+}
+
 void FSCamera::draw(void)
 {
   //cout << __PRETTY_FUNCTION__ << " camera draw "<< endl;
